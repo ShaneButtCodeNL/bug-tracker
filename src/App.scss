@@ -1,0 +1,16 @@
+@use "colors";
+
+.warm {
+  color: colors.$warm-color-font-main;
+  background-color: colors.$warm-color-bg-main;
+}
+.warm-accent {
+  color: colors.$warm-color-font-accent;
+  background-color: colors.$warm-color-bg-accent;
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
