@@ -11,6 +11,11 @@
 
 .App-header {
   padding: 1em;
+  display: flex;
+}
+
+.title-container {
+  align-self: center;
 }
 
 .App {

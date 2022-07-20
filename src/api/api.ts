@@ -2,13 +2,12 @@ import UserList from "../data/UserList";
 import ProjectList from "../data/ProjectList";
 import Project from "../data/Project";
 import Issue from "../data/Issue";
-import { pid } from "process";
 
 export function GetUser(username: string) {
   return UserList.getUser(username) || null;
 }
 
-export function GetProject(pId: number) {
+export function GetProject(pid: number) {
   return ProjectList.getProject(pid) || null;
 }
 
@@ -48,7 +47,10 @@ export function makeUser(username: string, password: string) {
   UserList.makeUser(username, password);
 }
 
-export function Login(username: string, password: string) {
+export function Login(username: string | null, password: string | null) {
+  console.log(username, password);
+  if (!username || !password) return;
+  UserList.makeUser(username, password);
   let user = GetUser(username);
   if (user && user.getPassword() === password) {
     return user;

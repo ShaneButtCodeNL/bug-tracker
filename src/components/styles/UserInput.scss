@@ -21,3 +21,13 @@
     min-width: 5em;
   }
 }
+.loggedin-user-import-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  button {
+    width: 40%;
+    min-width: 5em;
+  }
+}
