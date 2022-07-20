@@ -57,6 +57,14 @@ export default class ProjectList {
     project.removeLanguage(language);
   }
 
+  static updateStateOfIssue(
+    projectId: number,
+    issueId: number,
+    newState: number
+  ) {
+    IssueList.updateIssueState(projectId, issueId, newState);
+  }
+
   static reset() {
     this.listOfProjects = [];
     UserList.reset();

@@ -9,8 +9,13 @@
   background-color: colors.$warm-color-bg-accent;
 }
 
+.App-header {
+  padding: 1em;
+}
+
 .App {
   text-align: center;
   height: 100vh;
   width: 100vw;
+  overflow: auto;
 }

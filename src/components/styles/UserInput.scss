@@ -1,0 +1,23 @@
+.user-input-container {
+  width: 30%;
+  max-width: 17em;
+  border: solid 1px;
+  padding: 0.5em;
+  border-radius: 1em;
+}
+.user-input-form {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.5em;
+  place-items: center;
+  input {
+    border-radius: 0.5em;
+    padding-left: 0.5em;
+  }
+  button {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 40%;
+    min-width: 5em;
+  }
+}
