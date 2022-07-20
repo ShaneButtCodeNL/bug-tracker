@@ -3,6 +3,9 @@ import IssueList from "./IssueList";
 import UserList from "./UserList";
 export default class ProjectList {
   private static listOfProjects: Project[] = [];
+  static getListOfProjects() {
+    return [...this.listOfProjects];
+  }
   static addProjectToList(project: Project) {
     let exists = this.listOfProjects.find((x) => x.compareTo(project));
     if (exists) return;
@@ -31,6 +34,7 @@ export default class ProjectList {
     let project = this.getProject(projectId);
     if (!project) return;
     project.addMember(user);
+    user.addProjectToList(project);
   }
   static removeMember(projectId: number, username: string) {
     let user = UserList.getUser(username);
@@ -38,6 +42,7 @@ export default class ProjectList {
     let project = this.getProject(projectId);
     if (!project) return;
     project.removeMember(user);
+    user.removeProjectFromList(project);
   }
   static addLanguage(projectId: number, language: string) {
     if (!language || language === "") return;
@@ -50,5 +55,11 @@ export default class ProjectList {
     let project = this.getProject(projectId);
     if (!project) return;
     project.removeLanguage(language);
+  }
+
+  static reset() {
+    this.listOfProjects = [];
+    UserList.reset();
+    IssueList.reset();
   }
 }

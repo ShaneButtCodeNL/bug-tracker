@@ -53,6 +53,6 @@ export default class Project {
 
   removeLanguage(language: string) {
     let i = this.languages.indexOf(language);
-    if (i === -1) this.languages.splice(i, 1);
+    if (i !== -1) this.languages.splice(i, 1);
   }
 }

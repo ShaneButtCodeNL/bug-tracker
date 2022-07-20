@@ -35,6 +35,14 @@ export default class Issue {
   getTitle(): string {
     return this.title;
   }
+
+  /**
+   * Gets the description of the issue
+   * @returns {string} The issue description
+   */
+  getDescription(): string {
+    return this.description;
+  }
   /**
    * Gets a numerical value of the state of the issue
    * @returns {number} Numerical value of the issue state

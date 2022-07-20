@@ -1,7 +1,12 @@
 import Issue from "./Issue";
 
 export default class IssueList {
+  private static idCounter: number = 1;
   private static issueList: [number, Issue[]][] = [];
+
+  static getIssueProjectList() {
+    return [...this.issueList];
+  }
 
   /**
    * Adds an empty list of issues to a project
@@ -17,7 +22,7 @@ export default class IssueList {
    * @param projectId Id of the project
    * @returns List of issues of a project or null if there are none
    */
-  static getIssueList(projectId: number) {
+  static getIssueList(projectId: number): Issue[] | null {
     let issues = this.issueList.find((x) => x[0] === projectId);
     return issues ? issues[1] : null;
   }
@@ -40,7 +45,7 @@ export default class IssueList {
     }
     if (existing)
       existing[1].push(
-        new Issue(issueTitle, issueDescription, this.issueList[1].length + 1)
+        new Issue(issueTitle, issueDescription, IssueList.idCounter++)
       );
   }
 
@@ -61,5 +66,10 @@ export default class IssueList {
     if (!issue) return false;
     issue.find((x) => x.getId() === issueId)?.setState(newState);
     return true;
+  }
+
+  static reset() {
+    IssueList.idCounter = 1;
+    this.issueList = [];
   }
 }
