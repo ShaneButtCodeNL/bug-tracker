@@ -1,5 +1,19 @@
 import {} from "../api/api";
+import NavItem from "./NavItem";
 import "./styles/UserNavBar.scss";
-function UserNavBar(props: any) {
-  return <nav></nav>;
+const linkList = ["Home", "Projects", "Add Project"];
+export default function UserNavBar(props: any) {
+  return (
+    <nav>
+      {linkList.map((title, index) => (
+        <NavItem
+          title={title}
+          index={index}
+          key={index}
+          activeLink={props.activeLink}
+          setActiveLink={props.setActiveLink}
+        />
+      ))}
+    </nav>
+  );
 }

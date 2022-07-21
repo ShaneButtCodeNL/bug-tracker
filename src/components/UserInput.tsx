@@ -15,7 +15,10 @@ function UserInput(props: any) {
       //Error handleing
     }
   };
-  const logout = () => props.setUser(null);
+  const logout = () => {
+    props.setUser(null);
+    props.setActiveLink(0);
+  };
   return (
     <div className="user-input-container">
       {props.user === null ? (
