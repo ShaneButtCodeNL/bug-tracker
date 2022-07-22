@@ -23,4 +23,9 @@
   height: 100vh;
   width: 100vw;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.App-body {
+  flex-grow: 1;
 }

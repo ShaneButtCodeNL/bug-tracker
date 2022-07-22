@@ -26,7 +26,11 @@ function UserInput(props: any) {
           <label>UserName :</label>
           <input type="text" placeholder="UserName . . ." ref={usernameRef} />
           <label>Password :</label>
-          <input type="text" placeholder="Password . . ." ref={passwordRef} />
+          <input
+            type="password"
+            placeholder="Password . . ."
+            ref={passwordRef}
+          />
           <button type="button" onClick={() => login()}>
             Login
           </button>
