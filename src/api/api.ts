@@ -3,8 +3,10 @@ import ProjectList from "../data/ProjectList";
 import Project from "../data/Project";
 import Issue from "../data/Issue";
 
+const timeValue = 150;
+
 function delay(functionName?: string) {
-  let time = Math.max(150, Math.random() * 300);
+  let time = timeValue + Math.random() * timeValue;
   return new Promise((res) => {
     setTimeout(() => res({ name: functionName || "", time: time }), time);
   });

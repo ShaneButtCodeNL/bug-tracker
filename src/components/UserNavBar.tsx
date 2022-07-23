@@ -4,7 +4,7 @@ import "./styles/UserNavBar.scss";
 const linkList = ["Home", "Projects", "Add Project"];
 export default function UserNavBar(props: any) {
   return (
-    <nav>
+    <nav className="user-nav">
       {linkList.map((title, index) => (
         <NavItem
           title={title}

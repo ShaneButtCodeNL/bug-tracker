@@ -1,0 +1,52 @@
+.language-container {
+  padding: 1em;
+  border: inset 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-width: 20vw;
+}
+.selected-languages {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.language-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.add-project-form {
+  display: grid;
+  grid-template-columns: auto auto;
+  place-content: center;
+  gap: 1em;
+  label {
+    height: fit-content;
+    margin: auto;
+  }
+  input {
+    padding: 0.2em 1em;
+    border-radius: 0.5em;
+  }
+  textarea {
+    padding: 0.2em 1em;
+    border-radius: 0.5em;
+    resize: none;
+  }
+  button {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: fit-content;
+    margin: auto;
+    padding: 0.2em 1em;
+    border-radius: 0.5em;
+    border: solid 2px;
+  }
+  select {
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+    border: solid 1px;
+    width: fit-content;
+    margin: auto;
+  }
+}
