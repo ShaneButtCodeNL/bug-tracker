@@ -3,73 +3,116 @@ import ProjectList from "../data/ProjectList";
 import Project from "../data/Project";
 import Issue from "../data/Issue";
 
-export function GetUser(username: string) {
+function delay(functionName?: string) {
+  let time = Math.max(150, Math.random() * 300);
+  return new Promise((res) => {
+    setTimeout(() => res({ name: functionName || "", time: time }), time);
+  });
+}
+
+export async function GetUser(username: string) {
+  let res = await delay("GetUser");
+  console.log(res);
   return UserList.getUser(username) || null;
 }
 
-export function GetProject(pid: number) {
+export async function GetProject(pid: string) {
+  let res = await delay("GetProject");
+  console.log(res);
   return ProjectList.getProject(pid) || null;
 }
 
-export function GetUserProjectList(username: string) {
-  let user = GetUser(username);
+export async function GetUserProjectList(username: string) {
+  let res = await delay("GetUserProjects");
+  console.log(res);
+  let user = UserList.getUser(username) || null;
   if (user) {
     return user.getProjectsArray();
   }
   return null;
 }
 
-export function GetProjectListOfIssues(pid: number) {
-  ProjectList.getIssueList(pid);
+export async function GetProjectListOfIssues(pid: string) {
+  let res = await delay("GetProjectListOfIssues");
+  console.log(res);
+  ProjectList.getIssueListOfProject(pid);
 }
 
-export function AddProjectToList(project: Project) {
+export async function AddProjectToList(project: Project) {
+  let res = await delay("AddProjectToList");
+  console.log(res);
   ProjectList.addProjectToList(project);
 }
 
-export function AddIssueToProject(
-  projectId: number,
+export async function AddIssueToProject(
+  projectId: string,
   issueTitle: string,
   issueDescription: string
 ) {
+  let res = await delay("AddIssueToProject");
+  console.log(res);
   ProjectList.addIssueToProject(projectId, issueTitle, issueDescription);
 }
 
-export function AddMemberToProject(pid: number, username: string) {
+export async function AddMemberToProject(pid: string, username: string) {
+  let res = await delay("AddMemberToProject");
+  console.log(res);
   ProjectList.addMember(pid, username);
 }
 
-export function AddLanguageToProject(pid: number, lang: string) {
+export async function AddLanguageToProject(pid: string, lang: string) {
+  let res = await delay("AddLanguageToProject");
+  console.log(res);
+
   ProjectList.addLanguage(pid, lang);
 }
 
-export function makeUser(username: string, password: string) {
+export async function makeUser(username: string, password: string) {
+  let res = await delay("makeUser");
+  console.log(res);
+
   UserList.makeUser(username, password);
+  return UserList.getUser(username);
 }
 
-export function Login(username: string | null, password: string | null) {
+export async function Login(username: string | null, password: string | null) {
+  let res = await delay("Login");
+  console.log(res);
+
   console.log(username, password);
   if (!username || !password) return;
   UserList.makeUser(username, password);
-  let user = GetUser(username);
+  let user = UserList.getUser(username) || null;
   if (user && user.getPassword() === password) {
     return user;
   }
   return null;
 }
 
-export function SetIssueToClosed(pid: number, iid: number) {
+export async function SetIssueToClosed(pid: string, iid: string) {
+  let res = await delay("SetIssueToClosed");
+  console.log(res);
+
   ProjectList.updateStateOfIssue(pid, iid, Issue.Closed);
 }
 
-export function SetIssueToAwaitingApproval(pid: number, iid: number) {
+export async function SetIssueToAwaitingApproval(pid: string, iid: string) {
+  let res = await delay("SetIssueToAwaitingApproval");
+  console.log(res);
+
   ProjectList.updateStateOfIssue(pid, iid, Issue.AwaitingApproval);
 }
 
-export function SetIssueToOpen(pid: number, iid: number) {
+export async function SetIssueToOpen(pid: string, iid: string) {
+  let res = await delay("SetIssueToOpen");
+  console.log(res);
+
   ProjectList.updateStateOfIssue(pid, iid, Issue.Open);
 }
 
-export function SetIssueToTesting(pid: number, iid: number) {
+export async function SetIssueToTesting(pid: string, iid: string) {
+  let res = await delay("SetIssueToTesting");
+  console.log(res);
+
   ProjectList.updateStateOfIssue(pid, iid, Issue.Testing);
 }

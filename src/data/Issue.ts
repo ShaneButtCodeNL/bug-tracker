@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 enum States {
   Open = 0,
   Testing,
@@ -9,23 +11,44 @@ export default class Issue {
   static Testing: number = States.Testing;
   static AwaitingApproval: number = States.AwaitingApproval;
   static Closed: number = States.Closed;
-  private id: number;
+  private id: string;
   title: string;
   description: string;
   issueState: number;
 
-  constructor(title: string, description: string, id: number) {
-    this.id = id;
+  static makeIssueFromJSON(input: any) {
+    if (
+      !input ||
+      !input.id ||
+      !input.title ||
+      !input.description ||
+      isNaN(input.issueState) ||
+      input.issueState < States.Open ||
+      input.issueState > States.Closed
+    )
+      return null;
+    let issue = new Issue(input.title, input.description);
+    issue.setId(input.id);
+    issue.setState(input.issueState);
+    return issue;
+  }
+
+  constructor(title: string, description: string) {
+    this.id = uuidv4();
     this.title = title;
     this.issueState = States.Open;
     this.description = description;
+  }
+
+  private setId(newId: string) {
+    this.id = newId;
   }
 
   /**
    * Gets the id of an issue
    * @returns {number} The Id of the issue
    */
-  getId(): number {
+  getId(): string {
     return this.id;
   }
   /**
@@ -61,5 +84,18 @@ export default class Issue {
   setState(newState: number) {
     if (newState >= States.Open && newState <= States.Closed)
       this.issueState = newState;
+  }
+
+  getJSON(): object {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      issueState: this.issueState,
+    };
+  }
+
+  getJSONString(): string {
+    return JSON.stringify(this.getJSON());
   }
 }

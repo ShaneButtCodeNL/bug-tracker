@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { Component, useState } from "react";
 import { GetUserProjectList } from "../api/api";
 import "./styles/Projects.scss";
 
 export default function Projects(props: any) {
-  const [projectList, setProjectList] = useState(
-    props.user ? GetUserProjectList(props.user.getName()) : null
-  );
+  const [projectList, setProjectList] = useState(null);
+  //? async () => await GetUserProjectList(props.user.getName())
   return (
     <div className="projects-wrapper-div">
       <section>
         <h1>Projects</h1>
-        {projectList === null || projectList.length === 0 ? (
+        {projectList === null ? (
           <form onSubmit={(e) => e.preventDefault()}>
             <p>
               Looks like your not following any projects. Why not add a project

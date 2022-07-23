@@ -5,8 +5,8 @@ import { useRef } from "react";
 function UserInput(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const login = () => {
-    const user = Login(
+  const login = async () => {
+    const user = await Login(
       usernameRef.current?.value || null,
       passwordRef.current?.value.toLowerCase() || null
     );

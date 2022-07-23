@@ -1,9 +1,10 @@
 import Project from "./Project";
+import { v4 as uuidv4 } from "uuid";
 
 export default class User {
   name: string;
   private password: string;
-  private id: number;
+  private id: string;
   private projects: Project[];
 
   /**
@@ -12,11 +13,44 @@ export default class User {
    * @param id Unique id for the user
    * @param password Password for the user
    */
-  constructor(name: string, id: number, password: string) {
+  constructor(name: string, password: string) {
     this.name = name;
     this.password = password;
-    this.id = id;
+    this.id = uuidv4();
     this.projects = [];
+  }
+
+  private setId(newId: string) {
+    this.id = newId;
+  }
+
+  getJSON() {
+    return {
+      name: this.name,
+      password: this.password,
+      id: this.id,
+      projects: this.projects,
+    };
+  }
+
+  getJSONString() {
+    return JSON.stringify(this.getJSON());
+  }
+
+  static makeUserFromJSON(input: any) {
+    if (
+      !input ||
+      !input.name ||
+      !input.id ||
+      !input.password ||
+      input.name === "" ||
+      input.password === ""
+    )
+      return null;
+    let user = new User(input.name, input.password);
+    //console.debug("INPUT:", input, input.id);
+    user.setId(input.id);
+    return user;
   }
 
   getName() {

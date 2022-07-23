@@ -1,4 +1,3 @@
-import User from "./User";
 import UserList from "./UserList";
 
 test("Defaults.", () => {
@@ -13,13 +12,7 @@ test("Adding 5 users.adding an already used name", () => {
   UserList.makeUser("user4", "pass4");
   UserList.makeUser("user5", "pass5");
   expect(UserList.getUserList()).toHaveLength(5);
-  expect(
-    UserList.getUser("user3")?.compareTo(new User("a", 3, "b"))
-  ).toBeTruthy();
   UserList.makeUser("user3", "userFail");
   expect(UserList.getUserList()).toHaveLength(5);
-  expect(
-    UserList.getUser("user3")?.compareTo(new User("a", 3, "b"))
-  ).toBeTruthy();
 });
 UserList.reset();

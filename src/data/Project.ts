@@ -1,12 +1,25 @@
 import User from "./User";
+import { v4 as uuidv4 } from "uuid";
+
 export default class Project {
-  private id: number;
+  private id: string;
   name: string;
   languages: string[];
-  members: User[];
+  members: string[];
 
-  constructor(name: string, id: number, languages: string[]) {
-    this.id = id;
+  static makeProjectFromJSON(input: any): Project | null {
+    // console.debug("PROJECT:", input);
+    if (!input.languages) input.languages = [];
+    if (!input.members) input.members = [];
+    if (!input.id || !input.name) return null;
+    const pro = new Project(input.name, input.languages);
+    pro.members = input.members;
+    pro.setId(input.id);
+    return pro;
+  }
+
+  constructor(name: string, languages: string[]) {
+    this.id = uuidv4();
     this.languages = [...languages];
     this.name = name;
     this.members = [];
@@ -14,6 +27,9 @@ export default class Project {
 
   getId() {
     return this.id;
+  }
+  private setId(newId: string) {
+    this.id = newId;
   }
   getName() {
     return this.name;
@@ -24,10 +40,10 @@ export default class Project {
   getMembers() {
     return [...this.members];
   }
-  compareTo(project: Project) {
-    return project.getId() === this.id;
+  compareTo(project: Project | null) {
+    return project !== null && project.getId() === this.id;
   }
-  toJSON() {
+  getJSON() {
     return {
       id: this.id,
       name: this.name,
@@ -35,16 +51,21 @@ export default class Project {
       members: this.members,
     };
   }
+  getJSONString() {
+    return JSON.stringify(this.getJSON());
+  }
   addLanguage(language: string) {
     if (this.languages.indexOf(language) === -1) this.languages.push(language);
   }
   addMember(user: User) {
-    if (!this.members.find((x) => x.compareTo(user))) this.members.push(user);
+    if (!this.members.find((x) => x === user.getName()))
+      this.members.push(user.getName());
   }
 
   removeMember(user: User) {
+    console.debug("MEMBERS:", this.members);
     for (let i = 0; i < this.members.length; i++) {
-      if (this.members[i].compareTo(user)) {
+      if (this.members[i] === user.getName()) {
         this.members.splice(i, 1);
         return;
       }

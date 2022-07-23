@@ -1,72 +1,127 @@
 import Project from "./Project";
 import IssueList from "./IssueList";
 import UserList from "./UserList";
+import User from "./User";
+const key = "projectList";
+
+/**
+ *
+ *  {
+ *    projectList:{
+ *      projectList:{
+ *        [
+ *          project1,
+ *          project2
+ *        ]
+ *      }
+ *    }
+ *  }
+ */
 export default class ProjectList {
-  private static listOfProjects: Project[] = [];
-  static getListOfProjects() {
-    return [...this.listOfProjects];
+  static getListOfProjects(): Project[] {
+    let list = localStorage.getItem(key);
+
+    //Local storage has project list? continue else add to locale storage return empty array
+    if (!list) {
+      localStorage.setItem(key, JSON.stringify({ projectList: [] }));
+      return [];
+    }
+    //Return project list
+    return JSON.parse(list).projectList.map((x: any) =>
+      Project.makeProjectFromJSON(x)
+    );
   }
+
   static addProjectToList(project: Project) {
-    let exists = this.listOfProjects.find((x) => x.compareTo(project));
-    if (exists) return;
-    this.listOfProjects.push(project);
-    //Add Empty issue list to project
-    IssueList.addIssueListToProject(project.getId());
+    //Check if project is already in list
+    let exists =
+      this.getListOfProjects().find((x) => x.compareTo(project)) || null;
+
+    //Already exists? Exit
+    if (exists !== null) return;
+    let pList = this.getListOfProjects();
+    pList.push(project);
+    //Add to list
+    localStorage.setItem(key, JSON.stringify({ projectList: pList }));
   }
+
   static addIssueToProject(
-    projectId: number,
+    projectId: string,
     issueTitle: string,
     issueDescription: string
   ) {
-    let exists = this.getProject(projectId);
-    if (!exists) return false;
-    IssueList.addIssueToProjectIssues(projectId, issueTitle, issueDescription);
+    IssueList.addIssueToProjectIssues(issueTitle, issueDescription, projectId);
   }
-  static getIssueList(projectId: number) {
+
+  static getIssueListOfProject(projectId: string) {
     return IssueList.getIssueList(projectId);
   }
-  static getProject(projectId: number) {
-    return this.listOfProjects.find((x) => x.getId() === projectId);
+
+  static getProject(projectId: string) {
+    let pList = this.getListOfProjects();
+    let project = pList.find((x) => x.getId() === projectId) || null;
+    return project;
   }
-  static addMember(projectId: number, userName: string) {
-    let user = UserList.getUser(userName);
-    if (!user) return;
-    let project = this.getProject(projectId);
-    if (!project) return;
-    project.addMember(user);
-    user.addProjectToList(project);
+
+  static addMember(projectId: string, userName: string) {
+    const projectList = this.getListOfProjects();
+    const project = projectList.find((x) => x.getId() === projectId) || null;
+    //console.debug("Project", project);
+    if (project) {
+      const user = UserList.getUser(userName);
+      //console.debug("ADDUser", user);
+      if (user) project.addMember(user);
+    }
+    // console.debug("Project", project);
+
+    localStorage.setItem(key, JSON.stringify({ projectList: projectList }));
   }
-  static removeMember(projectId: number, username: string) {
+
+  static getMemberList(projectId: string) {
+    const project = this.getProject(projectId);
+    return project?.members.map((x) => UserList.getUser(x));
+  }
+
+  static removeMember(projectId: string, username: string) {
     let user = UserList.getUser(username);
     if (!user) return;
-    let project = this.getProject(projectId);
+    const projectList = this.getListOfProjects();
+    let project = projectList.find((x) => x.getId() === projectId) || null;
+    //console.debug("\n\nUSER:\n", user, "\nProject:\n", project);
     if (!project) return;
     project.removeMember(user);
     user.removeProjectFromList(project);
+    localStorage.setItem(key, JSON.stringify({ projectList: projectList }));
   }
-  static addLanguage(projectId: number, language: string) {
+
+  static addLanguage(projectId: string, language: string) {
     if (!language || language === "") return;
-    let project = this.getProject(projectId);
+    const projectList = this.getListOfProjects();
+    const project = projectList.find((x) => x.getId() === projectId);
     if (!project) return;
     project.addLanguage(language);
+    localStorage.setItem(key, JSON.stringify({ projectList: projectList }));
   }
-  static removeLanguage(projectId: number, language: string) {
+
+  static removeLanguage(projectId: string, language: string) {
     if (!language || language === "") return;
-    let project = this.getProject(projectId);
+    const projectList = this.getListOfProjects();
+    const project = projectList.find((x) => x.getId() === projectId);
     if (!project) return;
     project.removeLanguage(language);
+    localStorage.setItem(key, JSON.stringify({ projectList: projectList }));
   }
 
   static updateStateOfIssue(
-    projectId: number,
-    issueId: number,
+    projectId: string,
+    issueId: string,
     newState: number
   ) {
     IssueList.updateIssueState(projectId, issueId, newState);
   }
 
   static reset() {
-    this.listOfProjects = [];
+    localStorage.setItem(key, JSON.stringify({ projectList: [] }));
     UserList.reset();
     IssueList.reset();
   }

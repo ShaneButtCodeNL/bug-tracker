@@ -1,6 +1,6 @@
 import Issue from "./Issue";
 
-const issue = new Issue("Test Title", "Test Description", 5);
+const issue = new Issue("Test Title", "Test Description");
 test("Title is correct?", () => {
   expect(issue.getTitle()).toBe("Test Title");
   expect(issue.title).toBe("Test Title");
@@ -8,9 +8,6 @@ test("Title is correct?", () => {
 test("Description is correct?", () => {
   expect(issue.getDescription()).toBe("Test Description");
   expect(issue.description).toBe("Test Description");
-});
-test("Id is correct?", () => {
-  expect(issue.getId()).toBe(5);
 });
 test("Test state functions.", () => {
   expect(issue.getState()).toBe("Open");
