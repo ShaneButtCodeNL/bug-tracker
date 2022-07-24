@@ -40,9 +40,9 @@ export default class ProjectList {
     //Already exists? Exit
     if (exists !== null) return;
     if (user) {
-      console.log("Here:", user);
       project.addMember(user);
       UserList.addProjectToUser(project, user.getName());
+      IssueList.setUpProjectIssueList(project.getId());
       //user.addProjectToList(project);
     }
     let pList = this.getListOfProjects();
@@ -56,11 +56,15 @@ export default class ProjectList {
     issueTitle: string,
     issueDescription: string
   ) {
+    // console.log(projectId, issueTitle, issueDescription);
     IssueList.addIssueToProjectIssues(issueTitle, issueDescription, projectId);
   }
 
   static getIssueListOfProject(projectId: string) {
-    return IssueList.getIssueList(projectId);
+    //console.log("pid ", projectId);
+    let val = IssueList.getIssueList(projectId);
+    //console.log("val ", val);
+    return val;
   }
 
   static getProject(projectId: string) {

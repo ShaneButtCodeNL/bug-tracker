@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { GetProject, GetUserProjectList } from "../api/api";
+import {
+  GetProject,
+  GetProjectListOfIssues,
+  GetUserProjectList,
+} from "../api/api";
+import Issue from "../data/Issue";
 import Project from "../data/Project";
 import ProjectDisplay from "./ProjectDisplay";
 import "./styles/Projects.scss";
@@ -26,6 +31,27 @@ export default function Projects(props: any) {
     fetchList();
   }, [props.user]);
 
+  async function fetchIssueList(array: Issue[], pid: string) {
+    let res = await GetProjectListOfIssues(pid);
+    for (let x of res) {
+      if (x !== null) array.push(x);
+    }
+    return res;
+  }
+
+  function makeProjectDisplay(project: Project, index: number) {
+    //let issueList: Issue[] = [new Issue("F", "F")];
+    //fetchIssueList(issueList, project.getId());
+    return (
+      <ProjectDisplay
+        key={`project-display-${index}`}
+        index={index}
+        project={project}
+        //issueList={issueList}
+      />
+    );
+  }
+
   function projectsSwitch(list: Project[] | null) {
     if (list !== null) {
       if (list.length === 0)
@@ -40,9 +66,7 @@ export default function Projects(props: any) {
             </button>
           </form>
         );
-      return list.map((x, i) => (
-        <ProjectDisplay key={`project-display-${i}`} project={x} />
-      ));
+      return list.map((x, i) => makeProjectDisplay(x, i));
     }
     return <div>Searching</div>;
   }
@@ -51,19 +75,6 @@ export default function Projects(props: any) {
     <div className="projects-wrapper-div">
       <section>
         <h1>Projects</h1>
-        {/* {projectList === null || projectList.length === 0 ? (
-          <form onSubmit={(e) => e.preventDefault()}>
-            <p>
-              Looks like your not following any projects. Why not add a project
-              or follow an existing one.
-            </p>
-            <button type="button" onClick={() => props.setActiveLink(2)}>
-              Add Project
-            </button>
-          </form>
-        ) : (
-          <></>
-        )} */}
         {projectsSwitch(projectList)}
       </section>
     </div>

@@ -15,20 +15,25 @@ function delay(functionName?: string) {
 
 export async function GetUser(username: string) {
   let res = await delay("GetUser");
-  console.log(res);
+  //console.log(res);
+  console.debug(res);
+
   return UserList.getUser(username) || null;
 }
 
-//TODO fix
 export async function GetProject(pid: string) {
   let res = await delay("GetProject");
-  console.log(res);
+  //console.log(res);
+  console.debug(res);
+
   return ProjectList.getProject(pid) || null;
 }
 
 export async function GetUserProjectList(username: string) {
   let res = await delay("GetUserProjects");
-  console.log(res);
+  console.debug(res);
+
+  //console.log(res);
   let user = UserList.getUser(username) || null;
   if (user) {
     return user.getProjectsArray();
@@ -38,13 +43,16 @@ export async function GetUserProjectList(username: string) {
 
 export async function GetProjectListOfIssues(pid: string) {
   let res = await delay("GetProjectListOfIssues");
-  console.log(res);
-  ProjectList.getIssueListOfProject(pid);
+
+  console.debug(res);
+  let val = ProjectList.getIssueListOfProject(pid);
+  return val;
 }
 
 export async function AddProjectToList(project: Project, user: User) {
   let res = await delay("AddProjectToList");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
   ProjectList.addProjectToList(project, user);
 }
 
@@ -54,26 +62,30 @@ export async function AddIssueToProject(
   issueDescription: string
 ) {
   let res = await delay("AddIssueToProject");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
   ProjectList.addIssueToProject(projectId, issueTitle, issueDescription);
 }
 
 export async function AddMemberToProject(pid: string, username: string) {
   let res = await delay("AddMemberToProject");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
   ProjectList.addMember(pid, username);
 }
 
 export async function AddLanguageToProject(pid: string, lang: string) {
   let res = await delay("AddLanguageToProject");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   ProjectList.addLanguage(pid, lang);
 }
 
 export async function makeUser(username: string, password: string) {
   let res = await delay("makeUser");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   UserList.makeUser(username, password);
   return UserList.getUser(username);
@@ -81,7 +93,8 @@ export async function makeUser(username: string, password: string) {
 
 export async function Login(username: string | null, password: string | null) {
   let res = await delay("Login");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   if (!username || !password) return;
   UserList.makeUser(username, password);
@@ -94,28 +107,32 @@ export async function Login(username: string | null, password: string | null) {
 
 export async function SetIssueToClosed(pid: string, iid: string) {
   let res = await delay("SetIssueToClosed");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   ProjectList.updateStateOfIssue(pid, iid, Issue.Closed);
 }
 
 export async function SetIssueToAwaitingApproval(pid: string, iid: string) {
   let res = await delay("SetIssueToAwaitingApproval");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   ProjectList.updateStateOfIssue(pid, iid, Issue.AwaitingApproval);
 }
 
 export async function SetIssueToOpen(pid: string, iid: string) {
   let res = await delay("SetIssueToOpen");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   ProjectList.updateStateOfIssue(pid, iid, Issue.Open);
 }
 
 export async function SetIssueToTesting(pid: string, iid: string) {
   let res = await delay("SetIssueToTesting");
-  console.log(res);
+  console.debug(res);
+  //console.log(res);
 
   ProjectList.updateStateOfIssue(pid, iid, Issue.Testing);
 }

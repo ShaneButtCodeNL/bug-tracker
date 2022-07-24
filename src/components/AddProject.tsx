@@ -3,20 +3,7 @@ import { AddProjectToList } from "../api/api";
 import { useRef, useState } from "react";
 import SelectedLanguage from "./SelectedLanguage";
 import Project from "../data/Project";
-
-const LanguageList = [
-  "Java",
-  "Python",
-  "Javascript",
-  "Typescript",
-  "Ruby",
-  "c",
-  "c++",
-  "c#",
-  "Prolog",
-  "Lisp",
-  "Scala",
-].sort((a, b) => a.localeCompare(b));
+import { LanguageList } from "./Values";
 
 export default function AddProjects(props: any) {
   const [languages, setLanguages] = useState([""]);
