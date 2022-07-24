@@ -5,7 +5,7 @@ export default class User {
   name: string;
   private password: string;
   private id: string;
-  private projects: Project[];
+  private projects: string[];
 
   /**
    * Class defines a user and gives them an id and a list of projects associated with them
@@ -48,8 +48,8 @@ export default class User {
     )
       return null;
     let user = new User(input.name, input.password);
-    //console.debug("INPUT:", input, input.id);
     user.setId(input.id);
+    user.setProjectsToList(input.projects);
     return user;
   }
 
@@ -74,13 +74,17 @@ export default class User {
   }
 
   addProjectToList(project: Project) {
-    if (this.projects.find((x) => x.getId() === project.getId())) return;
-    this.projects.push(project);
+    if (this.projects.find((x) => x === project.getId())) return;
+    this.projects.push(project.getId());
+  }
+
+  private setProjectsToList(list: string[]) {
+    this.projects = list;
   }
 
   removeProjectFromList(project: Project) {
     for (let i = 0; i < this.projects.length; i++) {
-      if (project.getId() === this.projects[i].getId()) {
+      if (project.getId() === this.projects[i]) {
         this.projects.splice(i, 1);
         return;
       }

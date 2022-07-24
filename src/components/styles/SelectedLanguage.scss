@@ -1,0 +1,21 @@
+.selected-language-display-container {
+  display: flex;
+  gap: 0.5em;
+  border: solid 1px;
+  padding: 0.5em;
+  background-color: blue;
+  color: white;
+  border-radius: 1em;
+  button {
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0em;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    border: none;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+}

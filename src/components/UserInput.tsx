@@ -19,22 +19,30 @@ function UserInput(props: any) {
     props.setUser(null);
     props.setActiveLink(0);
   };
+  function resetLocalStorage() {
+    localStorage.clear();
+  }
   return (
     <div className="user-input-container">
       {props.user === null ? (
-        <form className="user-input-form">
-          <label>UserName :</label>
-          <input type="text" placeholder="UserName . . ." ref={usernameRef} />
-          <label>Password :</label>
-          <input
-            type="password"
-            placeholder="Password . . ."
-            ref={passwordRef}
-          />
-          <button type="button" onClick={() => login()}>
-            Login
+        <>
+          <form className="user-input-form">
+            <label>UserName :</label>
+            <input type="text" placeholder="UserName . . ." ref={usernameRef} />
+            <label>Password :</label>
+            <input
+              type="password"
+              placeholder="Password . . ."
+              ref={passwordRef}
+            />
+            <button type="button" onClick={() => login()}>
+              Login
+            </button>
+          </form>
+          <button type="button" onClick={() => resetLocalStorage()}>
+            RESET STORAGE
           </button>
-        </form>
+        </>
       ) : (
         <form className="loggedin-user-import-form">
           Welcome, {props.user.getName()}

@@ -26,13 +26,11 @@ export default function AddProjects(props: any) {
   const selectedLanguageRef = useRef<HTMLSelectElement>(null);
 
   function addLanguage(lang: string) {
-    console.log("lang:", lang);
     let index = languages.indexOf(lang);
     if (lang === "" || index !== -1) return;
     let newLang = languages[0] === "" ? [] : [...languages];
     newLang.push(lang);
     newLang.sort((a, b) => a.localeCompare(b));
-    console.log("newLang", newLang);
     setLanguages(newLang);
   }
 
@@ -46,7 +44,22 @@ export default function AddProjects(props: any) {
     setLanguages(newLang.length === 0 ? [""] : newLang);
   }
 
-  function addProjectToList() {}
+  async function addProjectToList() {
+    if (
+      projectNameRef.current &&
+      languages &&
+      projectNameRef.current.value &&
+      projectNameRef.current.value !== ""
+    ) {
+      const project = new Project(
+        projectNameRef.current.value,
+        languages[0] === "" ? [] : languages
+      );
+      await AddProjectToList(project, props.user);
+      return;
+    }
+    //todo Error handle
+  }
 
   return (
     <div className="addprojects-wrapper-div">
@@ -58,6 +71,7 @@ export default function AddProjects(props: any) {
       >
         <label>Project Name:</label>
         <input type="text" ref={projectNameRef} />
+        {/*
         <label>Project Description:</label>
         <textarea
           rows={4}
@@ -66,6 +80,7 @@ export default function AddProjects(props: any) {
           placeholder="Max 120 characters."
           ref={projectDescRef}
         ></textarea>
+  */}
         <label>Languages:</label>
         <div className="language-container">
           <div className="selected-languages">
@@ -100,7 +115,9 @@ export default function AddProjects(props: any) {
             </button>
           </div>
         </div>
-        <button type="button">Add Project</button>
+        <button type="button" onClick={() => addProjectToList()}>
+          Add Project
+        </button>
       </form>
     </div>
   );

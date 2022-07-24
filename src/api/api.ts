@@ -2,6 +2,7 @@ import UserList from "../data/UserList";
 import ProjectList from "../data/ProjectList";
 import Project from "../data/Project";
 import Issue from "../data/Issue";
+import User from "../data/User";
 
 const timeValue = 150;
 
@@ -18,6 +19,7 @@ export async function GetUser(username: string) {
   return UserList.getUser(username) || null;
 }
 
+//TODO fix
 export async function GetProject(pid: string) {
   let res = await delay("GetProject");
   console.log(res);
@@ -40,10 +42,10 @@ export async function GetProjectListOfIssues(pid: string) {
   ProjectList.getIssueListOfProject(pid);
 }
 
-export async function AddProjectToList(project: Project) {
+export async function AddProjectToList(project: Project, user: User) {
   let res = await delay("AddProjectToList");
   console.log(res);
-  ProjectList.addProjectToList(project);
+  ProjectList.addProjectToList(project, user);
 }
 
 export async function AddIssueToProject(
@@ -81,7 +83,6 @@ export async function Login(username: string | null, password: string | null) {
   let res = await delay("Login");
   console.log(res);
 
-  console.log(username, password);
   if (!username || !password) return;
   UserList.makeUser(username, password);
   let user = UserList.getUser(username) || null;

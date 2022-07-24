@@ -1,0 +1,36 @@
+.project-display-container {
+  position: relative;
+  overflow: hidden;
+  width: fit-content;
+  margin: 1em auto;
+  border: solid 3px rgba(0, 0, 0, 0.2);
+}
+.project-display-container::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: lightslategray;
+  left: -100%;
+  transition: left 500ms ease-out;
+  z-index: -1;
+}
+.project-display-container:hover::before {
+  left: 0;
+}
+
+.project-display-details {
+  display: grid;
+  grid-template-columns: 20em 20em;
+  place-content: center;
+  gap: 0.5em;
+  width: fit-content;
+  dt {
+    position: relative;
+    font-weight: 600;
+    margin: 0.3em;
+  }
+  dd {
+    text-align: left;
+  }
+}

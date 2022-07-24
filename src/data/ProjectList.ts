@@ -32,13 +32,19 @@ export default class ProjectList {
     );
   }
 
-  static addProjectToList(project: Project) {
+  static addProjectToList(project: Project, user: User | null) {
     //Check if project is already in list
     let exists =
       this.getListOfProjects().find((x) => x.compareTo(project)) || null;
 
     //Already exists? Exit
     if (exists !== null) return;
+    if (user) {
+      console.log("Here:", user);
+      project.addMember(user);
+      UserList.addProjectToUser(project, user.getName());
+      //user.addProjectToList(project);
+    }
     let pList = this.getListOfProjects();
     pList.push(project);
     //Add to list

@@ -12,7 +12,7 @@ test("Defaults", () => {
 UserList.makeUser(testUser.name, testUser.getPassword());
 //const project = new Project("pName", ["Java"]);
 test("Add project to list,get project", () => {
-  ProjectList.addProjectToList(testProject);
+  ProjectList.addProjectToList(testProject, null);
   expect(ProjectList.getListOfProjects()).toHaveLength(1);
 
   expect(ProjectList.getProject(testProject.getId())).toStrictEqual(

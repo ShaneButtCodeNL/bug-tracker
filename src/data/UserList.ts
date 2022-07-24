@@ -3,7 +3,18 @@ import User from "./User";
 const key = "userList";
 export default class UserList {
   static getUser(username: string): User | null {
-    return this.getUserList().find((x) => x.getName() === username) || null;
+    let user = this.getUserList().find((x) => x.getName() === username) || null;
+
+    return user;
+  }
+
+  static addProjectToUser(project: Project, userName: string) {
+    let userList = this.getUserList();
+    let user = userList.find((x) => x.getName() === userName) || null;
+    if (user !== null) {
+      user.addProjectToList(project);
+      localStorage.setItem(key, JSON.stringify({ userList: userList }));
+    }
   }
 
   static getUserList(): User[] {
@@ -22,7 +33,6 @@ export default class UserList {
       userList.find((x: User) => x.getName() === user.getName()) || null;
     if (exists !== null) return;
     userList.push(user);
-    //console.debug("MAKEUSER:USER:", user);
     localStorage.setItem(key, JSON.stringify({ userList: userList }));
   }
   static makeUser(name: string, password: string) {
