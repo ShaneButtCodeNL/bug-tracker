@@ -1,10 +1,19 @@
 import { useRef } from "react";
-import { AddIssueToProject } from "../api/api";
+import { AddIssueToProject, GetProjectListOfIssues } from "../api/api";
 import "./styles/AddIssueDialog.scss";
 
 export default function AddIssueDialog(props: any) {
   const titleRef = useRef<HTMLInputElement>(null);
   const descRef = useRef<HTMLTextAreaElement>(null);
+
+  function UpdateList() {
+    async function fetchIssueList() {
+      let list = await GetProjectListOfIssues(props.project.getId());
+      if (list) props.setIssueList(list);
+    }
+    fetchIssueList();
+  }
+
   function close(e: any) {
     e.stopPropagation();
     if (titleRef.current) titleRef.current.value = "";
@@ -49,6 +58,7 @@ export default function AddIssueDialog(props: any) {
               titleRef.current?.value || "",
               descRef.current?.value || ""
             );
+            UpdateList();
             close(e);
           }}
         >

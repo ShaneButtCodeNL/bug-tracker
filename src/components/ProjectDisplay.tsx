@@ -6,13 +6,15 @@ import IssueDisplay from "./IssueDisplay";
 import "./styles/ProjectDisplay.scss";
 
 export default function ProjectDisplay(props: any) {
-  const [issueList, setIssueList] = useState<any>([]);
+  const [issueList, setIssueList] = useState<any>(null);
   const [showDialog, setShowDialog] = useState<Boolean>(false);
+
+  async function fetchIssueList() {
+    let list = await GetProjectListOfIssues(props.project.getId());
+    if (list) setIssueList(list);
+  }
+
   useEffect(() => {
-    async function fetchIssueList() {
-      let list = await GetProjectListOfIssues(props.project.getId());
-      if (list) setIssueList(list);
-    }
     fetchIssueList();
   }, []);
   return (
@@ -31,6 +33,8 @@ export default function ProjectDisplay(props: any) {
                   issue={x}
                   key={`Issue-display-${x.getId()}`}
                   index={i}
+                  fetchIssueList={fetchIssueList}
+                  projectId={props.project.getId()}
                 />
               ))}
           <form
@@ -65,6 +69,7 @@ export default function ProjectDisplay(props: any) {
         project={props.project}
         show={showDialog}
         changeShow={() => setShowDialog((x) => !x)}
+        setIssueList={setIssueList}
       />
     </div>
   );

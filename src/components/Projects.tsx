@@ -31,14 +31,6 @@ export default function Projects(props: any) {
     fetchList();
   }, [props.user]);
 
-  async function fetchIssueList(array: Issue[], pid: string) {
-    let res = await GetProjectListOfIssues(pid);
-    for (let x of res) {
-      if (x !== null) array.push(x);
-    }
-    return res;
-  }
-
   function makeProjectDisplay(project: Project, index: number) {
     //let issueList: Issue[] = [new Issue("F", "F")];
     //fetchIssueList(issueList, project.getId());
