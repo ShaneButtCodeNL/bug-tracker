@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { GetProjectListOfIssues } from "../api/api";
 import Issue from "../data/Issue";
 import AddIssueDialog from "./AddIssueDialog";
+import AddLanguageDialog from "./AddLanguageDialog";
 import IssueDisplay from "./IssueDisplay";
 import "./styles/ProjectDisplay.scss";
 
 export default function ProjectDisplay(props: any) {
   const [issueList, setIssueList] = useState<any>(null);
-  const [showDialog, setShowDialog] = useState<Boolean>(false);
+  const [langList, setLangList] = useState<string[]>(
+    props.project.getLanguages() || []
+  );
+  const [showIssueDialog, setShowIssueDialog] = useState<Boolean>(false);
+  const [showLangDialog, setShowLangDialog] = useState<Boolean>(false);
 
   async function fetchIssueList() {
     let list = await GetProjectListOfIssues(props.project.getId());
@@ -41,7 +46,13 @@ export default function ProjectDisplay(props: any) {
             onSubmit={(e) => e.preventDefault()}
             id={`add-issue-form-number-${props.index}`}
           >
-            <button type="button" onClick={() => setShowDialog((x) => !x)}>
+            <button
+              type="button"
+              onClick={() => {
+                setShowLangDialog(false);
+                setShowIssueDialog(true);
+              }}
+            >
               Open new Issue
             </button>
           </form>
@@ -49,10 +60,8 @@ export default function ProjectDisplay(props: any) {
         <dt>Languages:</dt>
         <dd>
           <ul>
-            {props.project.getLanguages().length ? (
-              props.project
-                .getLanguages()
-                .map((x: string, i: number) => <li key={i}>{x}</li>)
+            {langList.length ? (
+              langList.map((x: string, i: number) => <li key={i}>{x}</li>)
             ) : (
               <li>None Listed</li>
             )}
@@ -61,15 +70,36 @@ export default function ProjectDisplay(props: any) {
             onSubmit={(e) => e.preventDefault()}
             id={`add-lang-form-number-${props.index}`}
           >
-            <button type="button">Add Language</button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowIssueDialog(false);
+                setShowLangDialog(true);
+              }}
+            >
+              Add Language
+            </button>
           </form>
         </dd>
       </dl>
       <AddIssueDialog
         project={props.project}
-        show={showDialog}
-        changeShow={() => setShowDialog((x) => !x)}
+        show={showIssueDialog && !showLangDialog}
+        changeShow={() => {
+          setShowLangDialog(false);
+          setShowIssueDialog((x) => !x);
+        }}
         setIssueList={setIssueList}
+      />
+      <AddLanguageDialog
+        project={props.project}
+        show={showLangDialog && !showIssueDialog}
+        languages={langList}
+        changeShow={() => {
+          setShowLangDialog((x) => !x);
+          setShowIssueDialog(false);
+        }}
+        setLangList={setLangList}
       />
     </div>
   );

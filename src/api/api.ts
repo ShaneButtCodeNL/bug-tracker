@@ -77,7 +77,6 @@ export async function AddMemberToProject(pid: string, username: string) {
 export async function AddLanguageToProject(pid: string, lang: string) {
   let res = await delay("AddLanguageToProject");
   console.debug(res);
-  //console.log(res);
 
   ProjectList.addLanguage(pid, lang);
 }
