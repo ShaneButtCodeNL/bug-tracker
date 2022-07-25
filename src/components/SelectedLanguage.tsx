@@ -1,5 +1,6 @@
 import "./styles/SelectedLanguage.scss";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 export default function SelectedLanguage(props: any) {
   return (
     <div
@@ -12,7 +13,7 @@ export default function SelectedLanguage(props: any) {
           type="button"
           onClick={() => props.removeLanguage(props.language)}
         >
-          X
+          <FontAwesomeIcon icon={faCircleXmark} fontSize="1.5em" />
         </button>
       ) : (
         <></>
