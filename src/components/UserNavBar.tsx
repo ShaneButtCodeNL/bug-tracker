@@ -1,7 +1,13 @@
 import {} from "../api/api";
 import NavItem from "./NavItem";
 import "./styles/UserNavBar.scss";
-const linkList = ["Home", "Projects", "Add Project"];
+const linkList = [
+  "Home",
+  "Projects",
+  "Add Project",
+  "Find Projects",
+  "MessageBox",
+];
 export default function UserNavBar(props: any) {
   return (
     <nav className="user-nav">

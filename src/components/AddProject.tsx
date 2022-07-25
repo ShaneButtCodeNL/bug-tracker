@@ -8,7 +8,8 @@ import { LanguageList } from "./Values";
 export default function AddProjects(props: any) {
   const [languages, setLanguages] = useState([""]);
   const projectNameRef = useRef<HTMLInputElement>(null);
-  const projectDescRef = useRef<HTMLTextAreaElement>(null);
+  //TODO IMPLEMENT DESC
+  //const projectDescRef = useRef<HTMLTextAreaElement>(null);
 
   const selectedLanguageRef = useRef<HTMLSelectElement>(null);
 
@@ -50,15 +51,18 @@ export default function AddProjects(props: any) {
 
   return (
     <div className="addprojects-wrapper-div">
-      <h1>Add Project</h1>
-      <form
-        id="add-project-form"
-        className="add-project-form"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <label>Project Name:</label>
-        <input type="text" ref={projectNameRef} />
-        {/*
+      <section>
+        <h1>Add Project</h1>
+        <form
+          id="add-project-form"
+          className="add-project-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <label>Project Name:</label>
+          <input type="text" ref={projectNameRef} />
+          {
+            //TODO IMPLEMENT DESC
+            /*
         <label>Project Description:</label>
         <textarea
           rows={4}
@@ -67,45 +71,47 @@ export default function AddProjects(props: any) {
           placeholder="Max 120 characters."
           ref={projectDescRef}
         ></textarea>
-  */}
-        <label>Languages:</label>
-        <div className="language-container">
-          <div className="selected-languages">
-            {languages.map((x, i) => (
-              <SelectedLanguage
-                key={i}
-                index={i}
-                language={x}
-                removeLanguage={removeLanguage}
-              />
-            ))}
-          </div>
-          <hr />
-          <div className="language-selector">
-            <select ref={selectedLanguageRef}>
-              <option value={""} key={-1}>
-                None
-              </option>
-              {LanguageList.map((x, i) => (
-                <option value={x} key={`lang-option-key-${i}`}>
-                  {x}
-                </option>
+  */
+          }
+          <label>Languages:</label>
+          <div className="language-container">
+            <div className="selected-languages">
+              {languages.map((x, i) => (
+                <SelectedLanguage
+                  key={i}
+                  index={i}
+                  language={x}
+                  removeLanguage={removeLanguage}
+                />
               ))}
-            </select>
-            <button
-              type="button"
-              onClick={() =>
-                addLanguage(selectedLanguageRef.current?.value || "")
-              }
-            >
-              Add Language
-            </button>
+            </div>
+            <hr />
+            <div className="language-selector">
+              <select ref={selectedLanguageRef}>
+                <option value={""} key={-1}>
+                  None
+                </option>
+                {LanguageList.map((x, i) => (
+                  <option value={x} key={`lang-option-key-${i}`}>
+                    {x}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={() =>
+                  addLanguage(selectedLanguageRef.current?.value || "")
+                }
+              >
+                Add Language
+              </button>
+            </div>
           </div>
-        </div>
-        <button type="button" onClick={() => addProjectToList()}>
-          Add Project
-        </button>
-      </form>
+          <button type="button" onClick={() => addProjectToList()}>
+            Add Project
+          </button>
+        </form>
+      </section>
     </div>
   );
 }

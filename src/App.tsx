@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./App.scss";
 import AddProjects from "./components/AddProject";
+import FindProjects from "./components/FindProjects";
 import Home from "./components/Home";
+import MessageBox from "./components/MessageBox";
 import Projects from "./components/Projects";
 import UserInput from "./components/UserInput";
 import UserNavBar from "./components/UserNavBar";
@@ -16,6 +18,10 @@ function RenderSwitch(n: number, user: User, setActiveLink: Function) {
       return <Projects user={user} setActiveLink={setActiveLink} />;
     case 2:
       return <AddProjects user={user} />;
+    case 3:
+      return <FindProjects user={user} />;
+    case 4:
+      return <MessageBox user={user} />;
     default:
       return <div>SomeThing went wrong Your not suposed to see this.</div>;
   }

@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  GetProject,
-  GetProjectListOfIssues,
-  GetUserProjectList,
-} from "../api/api";
-import Issue from "../data/Issue";
+import { GetProject, GetUserProjectList } from "../api/api";
 import Project from "../data/Project";
 import ProjectDisplay from "./ProjectDisplay";
 import "./styles/Projects.scss";

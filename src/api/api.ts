@@ -3,6 +3,12 @@ import ProjectList from "../data/ProjectList";
 import Project from "../data/Project";
 import Issue from "../data/Issue";
 import User from "../data/User";
+import {
+  GetUserMessages as GUM,
+  GiveMessageToUser as GMTU,
+  ChangeStatusOfMessage as CSOM,
+  DeleteMessage as DM,
+} from "../data/UserMessageList";
 
 const timeValue = 150;
 
@@ -134,4 +140,36 @@ export async function SetIssueToTesting(pid: string, iid: string) {
   //console.log(res);
 
   ProjectList.updateStateOfIssue(pid, iid, Issue.Testing);
+}
+export async function GetUserMessages(userName: string) {
+  let res = delay();
+  console.debug(res);
+  return GUM(userName);
+}
+
+export async function GiveMessageToUser(
+  toUser: string,
+  fromUser: string,
+  title: string,
+  body: string,
+  type: number
+) {
+  let res = delay();
+  console.debug(res);
+  GMTU(toUser, fromUser, title, body, type);
+}
+
+export async function ChangeStatusOfMessage(
+  userName: string,
+  msgId: string,
+  newStatus: string
+) {
+  let res = delay();
+  console.debug(res);
+  CSOM(userName, msgId, newStatus);
+}
+export async function DeleteMessage(userName: string, msgId: string) {
+  let res = delay();
+  console.debug(res);
+  DM(userName, msgId);
 }
