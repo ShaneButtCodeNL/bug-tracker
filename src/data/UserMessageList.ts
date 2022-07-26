@@ -1,5 +1,6 @@
-const key = "userMessageList";
 import { v4 as uuidv4 } from "uuid";
+
+const key = "userMessageList";
 /*
 Structure
 {
@@ -43,7 +44,7 @@ Structure
  */
 
 function makeEntryToken(input: any) {
-  localStorage.set(key, JSON.stringify({ input }));
+  localStorage.setItem(key, JSON.stringify(input));
 }
 
 function makeMessage(
@@ -84,7 +85,7 @@ function getUserMessagesObject(userName: string): any {
   //If user found return
   if (obj) return obj;
   //Make user/message obj,add to storage and return it
-  let res = { username: userName, messages: [] };
+  let res = { userName: userName, messages: [] };
   list.push(res);
   makeEntryToken(list);
   return res;
@@ -105,8 +106,9 @@ function addMessageToUser(userName: string, message: any) {
 
 export const Statuses = { Read: "Read", UnRead: "UnRead" };
 
-export function GetUserMessages(userName: string) {
+export function GetUserMessages(userName: string): [] {
   let userMessages = getUserMessagesObject(userName);
+  console.log(userMessages.messages);
   if (userMessages) return userMessages.messages;
   return [];
 }
@@ -120,9 +122,9 @@ export function GiveMessageToUser(
 ) {
   let message = makeMessage(
     messageType,
-    fromUserName,
     messageTitle,
-    messageBody
+    messageBody,
+    fromUserName
   );
   addMessageToUser(toUserName, message);
 }
