@@ -44,6 +44,9 @@ export default function AddProjects(props: any) {
         languages[0] === "" ? [] : languages
       );
       await AddProjectToList(project, props.user);
+      projectNameRef.current.value = "";
+      //projectDescRef.current.value = "";
+      setLanguages([""]);
       return;
     }
     //todo Error handle

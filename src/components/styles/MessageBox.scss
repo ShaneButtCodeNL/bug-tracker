@@ -42,10 +42,19 @@
   }
 }
 .message-box-inbox-toolbar {
+  --grid-size: 12em;
   border-bottom: 1px solid;
   width: 100%;
   line-height: 2em;
   margin-bottom: 1em;
+  display: grid;
+  grid-template-columns: repeat(5, var(--grid-size));
+  gap: 3em;
+}
+.message-box-inbox-toolbar-item {
+  padding: 1em;
+  margin: 0.5em 0;
+  cursor: pointer;
 }
 .message-list-item {
   border: solid;
@@ -57,17 +66,33 @@
   grid-template-columns: 2em 1fr 2em;
   grid-template-areas:
     "msg-status msg-from msg-checkbox"
-    "msg-title msg-title msg-title";
+    "msg-title msg-title none";
 }
 .message-list-item-title {
   grid-area: msg-title;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
 }
 .message-list-item-from {
   grid-area: msg-from;
+  span {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
 }
 .message-list-item-status {
   grid-area: msg-status;
+  cursor: pointer;
 }
 .message-list-item-checkbox {
   grid-area: msg-checkbox;
+  width: fit-content;
+  height: fit-content;
+}
+.message-list-item-checkbox:focus {
+  outline: none;
+  * {
+    box-shadow: 0 0 1px 3px rgba($color: #000000, $alpha: 0.2);
+  }
 }

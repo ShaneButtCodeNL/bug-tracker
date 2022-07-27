@@ -8,6 +8,7 @@ export default function NavItem(props: any) {
         props.activeLink === props.index ? "active" : "inactive"
       }`}
       key={props.index}
+      tabIndex={0}
       onClick={() => {
         props.setActiveLink(+props.index);
       }}

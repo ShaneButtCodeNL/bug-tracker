@@ -1,12 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faSquare,
   faEnvelope,
   faEnvelopeOpen,
 } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
-import { GetUserMessages, GiveMessageToUser } from "../api/api";
+import {
+  ChangeStatusOfMessage,
+  GetUserMessages,
+  GiveMessageToUser,
+} from "../api/api";
 import { Statuses } from "../data/UserMessageList";
 import "./styles/MessageBox.scss";
+import MessageDisplay from "./MessageDisplay";
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import ComposeMessageDisplay from "./ComposeMessageDisplay";
 enum DisplayStates {
   Inbox = 0,
   ComposeMessage,
@@ -15,14 +23,64 @@ enum DisplayStates {
 export default function MessageBox(props: any) {
   const [displayState, setDisplayState] = useState<number>(DisplayStates.Inbox);
   const [messageList, setMessageList] = useState<any>(null);
+  const [displayMessage, setDisplayMessage] = useState<any>(null);
+  const [selectedMessages, setSelectedMessages] = useState<
+    (boolean | undefined)[]
+  >([]);
 
   useEffect(() => {
     async function fetchMessageList() {
       let res = await GetUserMessages(props.user.getName());
+      setDisplayMessage(null);
       setMessageList(res);
+      setSelectedMessages(Array.from({ length: res.length }, (_) => false));
     }
     fetchMessageList();
   }, [props.user]);
+
+  useEffect(() => {
+    async function fetchMessageList() {
+      let res = await GetUserMessages(props.user.getName());
+      setDisplayMessage(null);
+      setMessageList(res);
+      setSelectedMessages(Array.from({ length: res.length }, (_) => false));
+    }
+    if (displayState === DisplayStates.Inbox) {
+      fetchMessageList();
+    }
+  }, [displayState, props.user]);
+
+  function ClickToOpenMessage(index: number) {
+    //console.log("/n{", messageList[index], "/n}");
+    async function updateState() {
+      if (messageList[index].status !== Statuses.Read)
+        await ChangeStatusOfMessage(
+          props.user.getName(),
+          messageList[index].id,
+          Statuses.Read
+        );
+    }
+    updateState();
+    messageList[index].status = Statuses.Read;
+
+    setDisplayMessage(messageList[index]);
+    setDisplayState(DisplayStates.DisplayMessage);
+  }
+
+  function ChangeCheckBox(index: number) {
+    console.log("ChangeCheckBox");
+    function flip(arr: (boolean | undefined)[]) {
+      console.log("ChangeCheckBox");
+      console.log("flip");
+      if (arr.length <= index) return arr;
+      arr[index] = !arr[index];
+      console.log("array", arr);
+      return arr;
+    }
+    console.log(selectedMessages.length, index);
+    let newArr = [...flip(selectedMessages)];
+    setSelectedMessages(newArr);
+  }
 
   function switchState() {
     switch (displayState) {
@@ -32,22 +90,49 @@ export default function MessageBox(props: any) {
             <div className="message-box-inbox-toolbar">
               <button
                 type="button"
+                className="message-box-inbox-toolbar-item"
                 onClick={() =>
                   GiveMessageToUser(
                     props.user.getName(),
                     props.user.getName(),
-                    "Test 1",
-                    Date.now().toString(),
+                    `Test ${Math.floor(Math.random() * 200 + 200)}`,
+                    "This is the body of The Message.This is the body of The Message.This is the body of The Message.\nThis is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.\n",
                     1
                   )
                 }
               >
                 Send Message to me
               </button>
+              <button
+                type="button"
+                className="message-box-inbox-toolbar-item message-box-inbox-toolbar-item-select-all"
+                onClick={() => setSelectedMessages((v) => v.map((_) => true))}
+              >
+                Select All
+              </button>
+              <button
+                type="button"
+                className="message-box-inbox-toolbar-item message-box-inbox-toolbar-item-deselect-all"
+                onClick={() => setSelectedMessages((v) => v.map((_) => false))}
+              >
+                Deselect All
+              </button>
+              <button
+                type="button"
+                className="message-box-inbox-toolbar-item message-box-inbox-toolbar-itemmark-as-read"
+              >
+                Mark as read
+              </button>
+              <button
+                type="button"
+                className="message-box-inbox-toolbar-item message-box-inbox-toolbar-item-delete"
+              >
+                Delete
+              </button>
             </div>
             <div className="message-box-inbox-message-list">
               {messageList ? (
-                messageList.length == 0 ? (
+                messageList.length === 0 ? (
                   <></>
                 ) : (
                   <ul className="message-list">
@@ -56,21 +141,44 @@ export default function MessageBox(props: any) {
                         key={`message-list-key-${i}`}
                         className="message-list-item"
                       >
-                        <div className="message-list-item-title">{x.title}</div>
-                        <div className="message-list-item-from">
-                          From : {x.from}
+                        <div
+                          onClick={() => ChangeCheckBox(i)}
+                          className="message-list-item-checkbox"
+                          tabIndex={0}
+                          style={{ paddingLeft: 0 }}
+                        >
+                          {selectedMessages[i] ? (
+                            <FontAwesomeIcon
+                              icon={faSquareCheck}
+                              fontSize="1.5em"
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              icon={faSquare}
+                              fontSize={"1.5em"}
+                            />
+                          )}
                         </div>
-                        <div className="message-list-item-status">
+                        <div
+                          className="message-list-item-title"
+                          onClick={() => ClickToOpenMessage(i)}
+                          tabIndex={0}
+                        >
+                          {x.title}
+                        </div>
+                        <div className="message-list-item-from">
+                          From : <span>{x.from}</span>
+                        </div>
+                        <div
+                          className="message-list-item-status"
+                          onClick={() => ClickToOpenMessage(i)}
+                        >
                           {x.status === Statuses.Read ? (
                             <FontAwesomeIcon icon={faEnvelopeOpen} />
                           ) : (
                             <FontAwesomeIcon icon={faEnvelope} />
                           )}
                         </div>
-                        <input
-                          type={"checkbox"}
-                          className="message-list-item-checkbox"
-                        />
                       </li>
                     ))}
                   </ul>
@@ -82,9 +190,17 @@ export default function MessageBox(props: any) {
           </div>
         );
       case DisplayStates.ComposeMessage:
+        return <ComposeMessageDisplay user={props.user} />;
+      case DisplayStates.DisplayMessage:
         return (
-          <div className="message-box-compose-message-container">compose</div>
+          <MessageDisplay
+            message={displayMessage}
+            user={props.user}
+            setDisplayState={setDisplayState}
+          />
         );
+      default:
+        return <>You Should never see this.</>;
     }
   }
   return (

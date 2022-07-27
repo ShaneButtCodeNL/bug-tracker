@@ -1,0 +1,49 @@
+.message-display-detail-box {
+  display: grid;
+  grid-template-areas: " title from date";
+  grid-template-columns: 1fr auto auto;
+  div {
+    margin: 0 1em 0 0;
+  }
+}
+.message-display-detail-title {
+  grid-area: title;
+}
+.message-display-detail-from {
+  grid-area: from;
+}
+.message-display-detail-date {
+  grid-area: date;
+}
+
+.message-display-body {
+  position: relative;
+  white-space: pre;
+  padding: 1em;
+  margin: 1em 0;
+}
+.message-display-body::before {
+  content: "";
+  width: calc(100% - 2em);
+  height: 3px;
+  left: 0.5em;
+  position: absolute;
+  top: -3px;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+}
+.message-display-toolbar {
+  padding: 0.5em 1em 0.5em 1em;
+}
+.message-display-toolbar-item {
+  border-radius: 1em;
+  border: outset 2px rgba($color: #000000, $alpha: 0.4);
+  width: fit-content;
+  padding: 0.3em 1em 0.3em 0;
+  cursor: pointer;
+  user-select: none;
+}
+.message-display-toolbar-item:focus {
+  outline: dashed 1px rgba(100, 100, 100, 0.5);
+  outline-offset: -2px;
+  box-shadow: 0px 0px 2px 2px rgba($color: #000000, $alpha: 0.4);
+}

@@ -1,0 +1,12 @@
+.compose-message-display-toolbar {
+  display: grid;
+  grid-template-columns: 3em 20em 5em 5em;
+  gap: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.compose-message-display-body-input {
+  resize: none;
+  padding: 4em;
+  width: 40em;
+}

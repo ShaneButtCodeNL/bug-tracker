@@ -42,6 +42,29 @@ Structure
    ]
 } 
  */
+enum Days {
+  Sun = 0,
+  Mon,
+  Tue,
+  Wed,
+  Thurs,
+  Fri,
+  Sat,
+}
+enum Months {
+  Jan = 0,
+  Feb,
+  Mar,
+  Apr,
+  May,
+  Jun,
+  Jul,
+  Aug,
+  Sep,
+  Oct,
+  Nov,
+  Dec,
+}
 
 function makeEntryToken(input: any) {
   localStorage.setItem(key, JSON.stringify(input));
@@ -53,6 +76,7 @@ function makeMessage(
   body: string,
   fromUser: string
 ) {
+  const date = new Date(Date.now());
   return {
     id: uuidv4(),
     type: type,
@@ -60,6 +84,10 @@ function makeMessage(
     title: title,
     body: body,
     status: Statuses.UnRead,
+    projectId: "",
+    date: `${Days[date.getDay()]} ${date.getDate()}-${
+      Months[date.getMonth()]
+    }-${date.getFullYear()}`,
   };
 }
 
@@ -108,7 +136,6 @@ export const Statuses = { Read: "Read", UnRead: "UnRead" };
 
 export function GetUserMessages(userName: string): [] {
   let userMessages = getUserMessagesObject(userName);
-  console.log(userMessages.messages);
   if (userMessages) return userMessages.messages;
   return [];
 }
@@ -137,7 +164,8 @@ export function ChangeStatusOfMessage(
   let list = getAll();
   let user = list.find((x: any) => x.userName === userName);
   if (user) {
-    let message = user.find((x: any) => x.id === msgId);
+    let message = user.messages.find((x: any) => x.id === msgId);
+
     if (message) {
       message.status = newStatus;
       makeEntryToken(list);
