@@ -37,3 +37,13 @@ This may take a few mins. When it's done run a test Server.
 `npm start`
 
 ### Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Important Notes on using the app
+
+### 1. The API is simulated using reacts **local-storage** . This means the data is stored on your browser even if you close/refresh the page or even stop and restart the server.
+
+### 2. On the splash page there is a button under the login form that says ** RESET STORAGE **. This will clear all locally stored data on the browser, including users, projects, and messages. I recommend doing this if you plan to remove the demo just to keep it clean.
+
+### 3. API calls have a delay of 150ms-300ms just to mimic real API calls.
+
+That's it!! Have Fun !! :sunglasses: :sunglasses: :sunglasses:
