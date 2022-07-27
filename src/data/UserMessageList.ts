@@ -177,9 +177,9 @@ export function DeleteMessage(userName: string, msgId: string) {
   let list = getAll();
   let user = list.find((x: any) => x.userName === userName);
   if (user) {
-    for (let i = 0; i < user.length; i++) {
-      if (user[i].id === msgId) {
-        user.splice(i, 1);
+    for (let i = 0; i < user.messages.length; i++) {
+      if (user.messages[i].id === msgId) {
+        user.messages.splice(i, 1);
         makeEntryToken(list);
         return;
       }

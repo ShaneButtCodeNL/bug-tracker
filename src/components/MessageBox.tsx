@@ -7,6 +7,8 @@ import {
 import { useEffect, useState } from "react";
 import {
   ChangeStatusOfMessage,
+  ChangeStatusOfMessageList,
+  DeleteListOfMessages,
   GetUserMessages,
   GiveMessageToUser,
 } from "../api/api";
@@ -67,17 +69,44 @@ export default function MessageBox(props: any) {
     setDisplayState(DisplayStates.DisplayMessage);
   }
 
+  function GetListOfIdsFromSelected() {
+    let list: string[] = [];
+    selectedMessages.forEach((selectd, index) => {
+      if (selectd) list.push(messageList[index].id);
+    });
+    return list;
+  }
+
+  function SetSelectedStatusTo(status: string) {
+    let list = GetListOfIdsFromSelected();
+    async function update() {
+      await ChangeStatusOfMessageList(props.user.getName(), list, status);
+      let res = await GetUserMessages(props.user.getName());
+      setDisplayMessage(null);
+      setMessageList(res);
+      setSelectedMessages(Array.from({ length: res.length }, (_) => false));
+    }
+    update();
+  }
+
+  function DeleteSelectedMessages() {
+    let list = GetListOfIdsFromSelected();
+    async function update() {
+      await DeleteListOfMessages(props.user.getName(), list);
+      let res = await GetUserMessages(props.user.getName());
+      setDisplayMessage(null);
+      setMessageList(res);
+      setSelectedMessages(Array.from({ length: res.length }, (_) => false));
+    }
+    update();
+  }
+
   function ChangeCheckBox(index: number) {
-    console.log("ChangeCheckBox");
     function flip(arr: (boolean | undefined)[]) {
-      console.log("ChangeCheckBox");
-      console.log("flip");
       if (arr.length <= index) return arr;
       arr[index] = !arr[index];
-      console.log("array", arr);
       return arr;
     }
-    console.log(selectedMessages.length, index);
     let newArr = [...flip(selectedMessages)];
     setSelectedMessages(newArr);
   }
@@ -88,21 +117,6 @@ export default function MessageBox(props: any) {
         return (
           <div className="message-box-inbox-container">
             <div className="message-box-inbox-toolbar">
-              <button
-                type="button"
-                className="message-box-inbox-toolbar-item"
-                onClick={() =>
-                  GiveMessageToUser(
-                    props.user.getName(),
-                    props.user.getName(),
-                    `Test ${Math.floor(Math.random() * 200 + 200)}`,
-                    "This is the body of The Message.This is the body of The Message.This is the body of The Message.\nThis is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.This is the body of The Message.\n",
-                    1
-                  )
-                }
-              >
-                Send Message to me
-              </button>
               <button
                 type="button"
                 className="message-box-inbox-toolbar-item message-box-inbox-toolbar-item-select-all"
@@ -120,12 +134,24 @@ export default function MessageBox(props: any) {
               <button
                 type="button"
                 className="message-box-inbox-toolbar-item message-box-inbox-toolbar-itemmark-as-read"
+                disabled={selectedMessages && selectedMessages.length === 0}
+                onClick={() => SetSelectedStatusTo(Statuses.Read)}
               >
-                Mark as read
+                Mark As Read
+              </button>
+              <button
+                type="button"
+                className="message-box-inbox-toolbar-item message-box-inbox-toolbar-itemmark-as-read"
+                disabled={selectedMessages && selectedMessages.length === 0}
+                onClick={() => SetSelectedStatusTo(Statuses.UnRead)}
+              >
+                Mark As Unread
               </button>
               <button
                 type="button"
                 className="message-box-inbox-toolbar-item message-box-inbox-toolbar-item-delete"
+                disabled={selectedMessages && selectedMessages.length === 0}
+                onClick={() => DeleteSelectedMessages()}
               >
                 Delete
               </button>
@@ -190,7 +216,12 @@ export default function MessageBox(props: any) {
           </div>
         );
       case DisplayStates.ComposeMessage:
-        return <ComposeMessageDisplay user={props.user} />;
+        return (
+          <ComposeMessageDisplay
+            user={props.user}
+            setDisplayState={setDisplayState}
+          />
+        );
       case DisplayStates.DisplayMessage:
         return (
           <MessageDisplay

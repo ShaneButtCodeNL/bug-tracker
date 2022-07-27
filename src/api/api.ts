@@ -153,8 +153,29 @@ export async function ChangeStatusOfMessage(
   console.debug(res);
   CSOM(userName, msgId, newStatus);
 }
+
+export async function ChangeStatusOfMessageList(
+  userName: string,
+  msgIdList: string[],
+  newStatus: string
+) {
+  msgIdList.forEach((msgId) => {
+    CSOM(userName, msgId, newStatus);
+  });
+
+  let res = await delay("ChangeStatusOfMessageList");
+  console.debug(res);
+}
+
 export async function DeleteMessage(userName: string, msgId: string) {
   let res = await delay("DeleteMessage");
   console.debug(res);
   DM(userName, msgId);
+}
+
+export async function DeleteListOfMessages(userName: string, msgIds: string[]) {
+  msgIds.forEach((msgId) => DM(userName, msgId));
+
+  let res = await delay("DeleteMessageList");
+  console.debug(res);
 }

@@ -1,12 +1,43 @@
+.compose-message-display-container {
+  position: relative;
+}
 .compose-message-display-toolbar {
   display: grid;
-  grid-template-columns: 3em 20em 5em 5em;
+  grid-template-columns: 5em 3em auto 5em;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "inbox-button to-label to-input send-button"
+    "inbox-button title-label title-input send-button";
   gap: 1em;
   margin-top: 1em;
   margin-bottom: 1em;
+  padding-right: 2em;
+}
+.compose-message-display-inbox-btn {
+  grid-area: inbox-button;
+}
+.compose-message-display-to-label {
+  grid-area: to-label;
+}
+.compose-message-display-to-input {
+  grid-area: to-input;
+}
+.compose-message-display-send-btn {
+  grid-area: send-button;
+}
+.compose-message-display-title-label {
+  grid-area: title-label;
+}
+.compose-message-display-title-input {
+  grid-area: title-input;
+}
+.compose-message-display-main {
+  width: 100%;
+  margin-right: 2em;
+  position: relative;
 }
 .compose-message-display-body-input {
   resize: none;
-  padding: 4em;
-  width: 40em;
+  padding: 2em;
+  width: 90%;
 }
