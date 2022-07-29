@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { GetProjectListOfIssues } from "../api/api";
+import { useEffect, useRef, useState } from "react";
+import { GetProjectListOfIssues, SendInviteToUser } from "../api/api";
 import Issue from "../data/Issue";
 import AddIssueDialog from "./AddIssueDialog";
 import AddLanguageDialog from "./AddLanguageDialog";
@@ -13,6 +13,8 @@ export default function ProjectDisplay(props: any) {
   );
   const [showIssueDialog, setShowIssueDialog] = useState<Boolean>(false);
   const [showLangDialog, setShowLangDialog] = useState<Boolean>(false);
+  const inviteNameRef = useRef<HTMLInputElement>(null);
+  const [inviteName, setInviteName] = useState("");
 
   async function fetchIssueList() {
     let list = await GetProjectListOfIssues(props.project.getId());
@@ -82,6 +84,27 @@ export default function ProjectDisplay(props: any) {
           </form>
         </dd>
       </dl>
+      <div className="project-display-invite-container">
+        <div>Invite a Friend :</div>
+        <input
+          type="text"
+          className="project-display-invite-input"
+          placeholder="Username"
+          onChange={(e) => setInviteName(e.target.value)}
+          ref={inviteNameRef}
+        />
+        <button
+          type="button"
+          className="project-display-invite-button"
+          onClick={() => {
+            SendInviteToUser(inviteName, props.user.getName(), props.project);
+            if (inviteNameRef.current) inviteNameRef.current.value = "";
+          }}
+          disabled={inviteName === ""}
+        >
+          Send
+        </button>
+      </div>
       <AddIssueDialog
         project={props.project}
         show={showIssueDialog && !showLangDialog}

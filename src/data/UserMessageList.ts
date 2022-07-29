@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import Project from "./Project";
 
 const key = "userMessageList";
 /*
@@ -87,6 +88,7 @@ function makeMessage(
     body: body,
     status: Statuses.UnRead,
     projectId: "",
+    projectTitle: "",
     date: `${Days[date.getDay()]} ${date.getDate()}-${
       Months[date.getMonth()]
     }-${date.getFullYear()}`,
@@ -156,6 +158,22 @@ export function GiveMessageToUser(
     fromUserName
   );
   addMessageToUser(toUserName, message);
+}
+
+export function sendInviteToProject(
+  toUser: string,
+  fromUser: string,
+  project: Project
+) {
+  let message = makeMessage(
+    2,
+    `Invite from ${fromUser} to join "${project.getName()}".`,
+    `${fromUser} would like you to join them in the project "${project.getName()}". Click the button below to add this project to your list of tracked projects.\nHave a great day!\n\nThe team at Bug-Trax `,
+    "SYSTEM"
+  );
+  message.projectId = project.getId();
+  message.projectTitle = project.getName();
+  addMessageToUser(toUser, message);
 }
 
 export function ChangeStatusOfMessage(

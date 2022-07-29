@@ -50,3 +50,23 @@
     }
   }
 }
+
+.project-display-invite-container {
+  display: grid;
+  place-content: center;
+  grid-template-columns: auto auto auto;
+  gap: 1em;
+  padding: 1em;
+  div {
+    margin: auto;
+  }
+  button {
+    padding: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+  }
+  input {
+    border-radius: 1em;
+    padding-left: 1em;
+  }
+}

@@ -32,6 +32,7 @@ export default function Projects(props: any) {
         key={`project-display-${index}`}
         index={index}
         project={project}
+        user={props.user}
       />
     );
   }

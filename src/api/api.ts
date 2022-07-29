@@ -8,6 +8,7 @@ import {
   GiveMessageToUser as GMTU,
   ChangeStatusOfMessage as CSOM,
   DeleteMessage as DM,
+  sendInviteToProject,
 } from "../data/UserMessageList";
 
 const timeValue = 150;
@@ -153,10 +154,21 @@ export async function SetIssueToTesting(pid: string, iid: string) {
   console.debug(res);
   ProjectList.updateStateOfIssue(pid, iid, Issue.Testing);
 }
+
 export async function GetUserMessages(userName: string) {
   let res = await delay("GetUserMessages");
   console.debug(res);
   return GUM(userName);
+}
+
+export async function SendInviteToUser(
+  toUser: string,
+  fromUser: string,
+  project: Project
+) {
+  let res = await delay("SendInviteToUser");
+  console.debug(res);
+  sendInviteToProject(toUser, fromUser, project);
 }
 
 export async function GiveMessageToUser(
