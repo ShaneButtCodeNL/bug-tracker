@@ -27,14 +27,11 @@ export default function Projects(props: any) {
   }, [props.user]);
 
   function makeProjectDisplay(project: Project, index: number) {
-    //let issueList: Issue[] = [new Issue("F", "F")];
-    //fetchIssueList(issueList, project.getId());
     return (
       <ProjectDisplay
         key={`project-display-${index}`}
         index={index}
         project={project}
-        //issueList={issueList}
       />
     );
   }

@@ -27,9 +27,6 @@ export default function FindProjects(props: any) {
                 key={`find-project-list-item-${i}`}
               >
                 <FindProjectDisplayItem
-                  Title={pro.getName()}
-                  LanguageList={pro.getLanguages()}
-                  MemberList={pro.getMembers()}
                   ProjectId={pro.getId()}
                   User={props.user}
                 />

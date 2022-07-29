@@ -80,6 +80,26 @@ export async function AddMemberToProject(pid: string, username: string) {
   ProjectList.addMember(pid, username);
 }
 
+export async function AddProjectToMember(pid: string, username: string) {
+  let res = await delay("AddProjectToMember");
+  console.debug(res);
+  let project = ProjectList.getProject(pid);
+  if (project) UserList.addProjectToUser(project, username);
+}
+
+export async function RemoveMemberFromProject(pid: string, username: string) {
+  let res = await delay("RemoveMemberFromProject");
+  console.debug(res);
+  ProjectList.removeMember(pid, username);
+}
+
+export async function RemoveProjectFromMember(pid: string, username: string) {
+  let res = await delay("RemoveProjectFromMember");
+  console.debug(res);
+  let project = ProjectList.getProject(pid);
+  if (project) UserList.removeUserFromProject(username, project);
+}
+
 export async function AddLanguageToProject(pid: string, lang: string) {
   let res = await delay("AddLanguageToProject");
   console.debug(res);
