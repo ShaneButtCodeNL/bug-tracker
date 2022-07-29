@@ -52,7 +52,9 @@ export default function AddLanguageDialog(props: any) {
           <option value={""}>None</option>
           {LanguageList.map((x, i) =>
             props.languages.indexOf(x) !== -1 ? (
-              <></>
+              <option value={x} key={`${x}-${i}`} style={{ display: "none" }}>
+                {x}
+              </option>
             ) : (
               <option value={x} key={`${x}-${i}`}>
                 {x}

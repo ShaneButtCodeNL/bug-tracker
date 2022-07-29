@@ -33,6 +33,13 @@ export async function GetProject(pid: string) {
   return ProjectList.getProject(pid) || null;
 }
 
+export async function GetPublicProjects() {
+  let res = await delay();
+  console.debug("GetPublicProjects", res);
+  let list = ProjectList.getListOfPublicProjects();
+  return list;
+}
+
 export async function GetUserProjectList(username: string) {
   let res = await delay("GetUserProjects");
   console.debug(res);

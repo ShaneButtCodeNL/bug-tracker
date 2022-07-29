@@ -1,0 +1,26 @@
+.find-project-item-container {
+  border: solid 1px;
+  border-radius: 1em;
+  margin: 1em;
+  padding: 1em;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 10em 10em;
+  gap: 1em;
+  grid-template-areas: "title title" "label lang-list" "button button";
+}
+.find-project-item-project-title {
+  grid-area: title;
+}
+.find-project-item-label {
+  grid-area: label;
+  text-align: left;
+}
+.find-project-item-lang-list {
+  grid-area: lang-list;
+}
+.find-project-item-button {
+  grid-area: button;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}

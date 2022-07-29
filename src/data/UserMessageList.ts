@@ -32,10 +32,12 @@ Structure
             {
                id: ". . .",
                from:". . .",
-               type: ". . .",
+               type: number,
                title: ". . .",
                body: ". . .",
-               status:" . . ."
+               status:" . . .",
+               projectId: ". . ."
+               date: ". . ."
             },
          ]
       }

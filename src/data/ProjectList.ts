@@ -32,6 +32,12 @@ export default class ProjectList {
     );
   }
 
+  static getListOfPublicProjects() {
+    let list = this.getListOfProjects();
+    //todo Filter
+    return list;
+  }
+
   static addProjectToList(project: Project, user: User | null) {
     //Check if project is already in list
     let exists =
