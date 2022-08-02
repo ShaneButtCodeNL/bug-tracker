@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  AddMemberToProject,
-  AddProjectToMember,
+  CoupleProjectAndMember,
+  DecoupleProjectAndMember,
   GetProject,
-  RemoveMemberFromProject,
-  RemoveProjectFromMember,
 } from "../api/api";
 import Project from "../data/Project";
 import "./styles/FindProjectDisplayItem.scss";
@@ -35,8 +33,7 @@ export default function FindProjectDisplayItem(props: any) {
             type="button"
             className="find-project-item-button"
             onClick={() => {
-              AddMemberToProject(props.ProjectId, props.User.getName());
-              AddProjectToMember(props.ProjectId, props.User.getName());
+              CoupleProjectAndMember(props.ProjectId, props.User.getName());
             }}
           >
             Follow
@@ -46,8 +43,7 @@ export default function FindProjectDisplayItem(props: any) {
             type="button"
             className="find-project-item-button"
             onClick={() => {
-              RemoveMemberFromProject(props.ProjectId, props.User.getName());
-              RemoveProjectFromMember(props.ProjectId, props.User.getName());
+              DecoupleProjectAndMember(props.ProjectId, props.User.getName());
             }}
           >
             Unfollow

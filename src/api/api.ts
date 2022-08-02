@@ -11,8 +11,14 @@ import {
   sendInviteToProject,
 } from "../data/UserMessageList";
 
+// delay value to simulate network speed min = (timevalue), max= (2 x timevalue)
 const timeValue = 150;
 
+/**
+ * Simulates network transfer speed using timeValue
+ * @param functionName Name for function call
+ * @returns An objet {name:"...", time:[timeValue , 2*timevalue]}
+ */
 function delay(functionName?: string) {
   let time = timeValue + Math.random() * timeValue;
   return new Promise((res) => {
@@ -20,6 +26,11 @@ function delay(functionName?: string) {
   });
 }
 
+/**
+ * Gets a user from the storage
+ * @param username the username
+ * @returns the user
+ */
 export async function GetUser(username: string) {
   let res = await delay("GetUser");
   console.debug(res);
@@ -27,6 +38,11 @@ export async function GetUser(username: string) {
   return UserList.getUser(username) || null;
 }
 
+/**
+ * Gets a project from the project storage
+ * @param pid The project id
+ * @returns A project or null
+ */
 export async function GetProject(pid: string) {
   let res = await delay("GetProject");
   console.debug(res);
@@ -34,6 +50,10 @@ export async function GetProject(pid: string) {
   return ProjectList.getProject(pid) || null;
 }
 
+/**
+ * Gets a list of public projects from storage
+ * @returns A list of public projects
+ */
 export async function GetPublicProjects() {
   let res = await delay();
   console.debug("GetPublicProjects", res);
@@ -41,6 +61,11 @@ export async function GetPublicProjects() {
   return list;
 }
 
+/**
+ * Gets the list of projects that user follows
+ * @param username The user name
+ * @returns An array of projects
+ */
 export async function GetUserProjectList(username: string) {
   let res = await delay("GetUserProjects");
   console.debug(res);
@@ -51,6 +76,11 @@ export async function GetUserProjectList(username: string) {
   return null;
 }
 
+/**
+ * Gets a list of issues for a certain project
+ * @param pid The project id
+ * @returns An array of issues for a project
+ */
 export async function GetProjectListOfIssues(pid: string) {
   let res = await delay("GetProjectListOfIssues");
 
@@ -59,12 +89,23 @@ export async function GetProjectListOfIssues(pid: string) {
   return val;
 }
 
+/**
+ * Adds project to be tracked and adds user to the following list
+ * @param project Project to be added
+ * @param user The user adding the project
+ */
 export async function AddProjectToList(project: Project, user: User) {
   let res = await delay("AddProjectToList");
   console.debug(res);
   ProjectList.addProjectToList(project, user);
 }
 
+/**
+ * Adds an issue to the project
+ * @param projectId The projects id
+ * @param issueTitle The title for the issue
+ * @param issueDescription The description for the issue
+ */
 export async function AddIssueToProject(
   projectId: string,
   issueTitle: string,
@@ -75,12 +116,22 @@ export async function AddIssueToProject(
   ProjectList.addIssueToProject(projectId, issueTitle, issueDescription);
 }
 
+/**
+ * Adds a user to the list of users following a project
+ * @param pid the project id
+ * @param username The username of the user
+ */
 export async function AddMemberToProject(pid: string, username: string) {
   let res = await delay("AddMemberToProject");
   console.debug(res);
   ProjectList.addMember(pid, username);
 }
 
+/**
+ * Adds a project to the list of projects followed by user
+ * @param pid The project id
+ * @param username the username of the user
+ */
 export async function AddProjectToMember(pid: string, username: string) {
   let res = await delay("AddProjectToMember");
   console.debug(res);
@@ -88,17 +139,55 @@ export async function AddProjectToMember(pid: string, username: string) {
   if (project) UserList.addProjectToUser(project, username);
 }
 
+/**
+ * Adds user to list of followers of project
+ * Adds project to list of followed projects of the user
+ * Combines AddProjectToMember and AddMemberToProject
+ * @param pid The project id
+ * @param username The username of the user
+ */
+export async function CoupleProjectAndMember(pid: string, username: string) {
+  let res = await delay("CoupleProjectAndMember");
+  console.debug(res);
+  await AddMemberToProject(pid, username);
+  await AddProjectToMember(pid, username);
+}
+
+/**
+ * Removes a user from list of followers of a project
+ * @param pid The project id
+ * @param username The user's username
+ */
 export async function RemoveMemberFromProject(pid: string, username: string) {
   let res = await delay("RemoveMemberFromProject");
   console.debug(res);
   ProjectList.removeMember(pid, username);
 }
 
+/**
+ * Remove a project from the list of a users followed projects
+ * @param pid The projects id
+ * @param username The user's username
+ */
 export async function RemoveProjectFromMember(pid: string, username: string) {
   let res = await delay("RemoveProjectFromMember");
   console.debug(res);
   let project = ProjectList.getProject(pid);
   if (project) UserList.removeUserFromProject(username, project);
+}
+
+/**
+ * Add project to list of user's followed projects
+ * Add user to list of followers of a project
+ * combines RemoveMemberFromProject and RemoveProjectFromMember
+ * @param pid The projects id
+ * @param username The user's username
+ */
+export async function DecoupleProjectAndMember(pid: string, username: string) {
+  let res = await delay("DecoupleProjectAndMember");
+  console.debug(res);
+  await RemoveMemberFromProject(pid, username);
+  await RemoveProjectFromMember(pid, username);
 }
 
 export async function AddLanguageToProject(pid: string, lang: string) {

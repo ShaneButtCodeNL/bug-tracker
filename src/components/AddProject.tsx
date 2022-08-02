@@ -8,10 +8,9 @@ import { LanguageList } from "./Values";
 export default function AddProjects(props: any) {
   const [languages, setLanguages] = useState([""]);
   const projectNameRef = useRef<HTMLInputElement>(null);
-  //TODO IMPLEMENT DESC
-  //const projectDescRef = useRef<HTMLTextAreaElement>(null);
-
+  const projectDescRef = useRef<HTMLTextAreaElement>(null);
   const selectedLanguageRef = useRef<HTMLSelectElement>(null);
+  const isPublicRef = useRef<string>("public");
 
   function addLanguage(lang: string) {
     let index = languages.indexOf(lang);
@@ -41,11 +40,14 @@ export default function AddProjects(props: any) {
     ) {
       const project = new Project(
         projectNameRef.current.value,
-        languages[0] === "" ? [] : languages
+        projectDescRef.current?.value || "None",
+        languages[0] === "" ? [] : languages,
+        isPublicRef.current === "public"
       );
       await AddProjectToList(project, props.user);
       projectNameRef.current.value = "";
-      //projectDescRef.current.value = "";
+      if (projectDescRef && projectDescRef.current)
+        projectDescRef.current.value = "";
       setLanguages([""]);
       return;
     }
@@ -63,19 +65,33 @@ export default function AddProjects(props: any) {
         >
           <label>Project Name:</label>
           <input type="text" ref={projectNameRef} />
-          {
-            //TODO IMPLEMENT DESC
-            /*
-        <label>Project Description:</label>
-        <textarea
-          rows={4}
-          cols={30}
-          maxLength={120}
-          placeholder="Max 120 characters."
-          ref={projectDescRef}
-        ></textarea>
-  */
-          }
+
+          <label>Project Description:</label>
+          <textarea
+            rows={4}
+            cols={30}
+            maxLength={120}
+            placeholder="Max 120 characters."
+            ref={projectDescRef}
+          ></textarea>
+          <label>Make Public :</label>
+          <div className="language-container">
+            <input
+              type={"radio"}
+              value="public"
+              name="is-public"
+              onClick={() => (isPublicRef.current = "public")}
+              checked
+            />{" "}
+            Public
+            <input
+              type={"radio"}
+              value="private"
+              name="is-public"
+              onClick={() => (isPublicRef.current = "private")}
+            />{" "}
+            Private
+          </div>
           <label>Languages:</label>
           <div className="language-container">
             <div className="selected-languages">
