@@ -77,13 +77,15 @@ function makeMessage(
   type: number,
   title: string,
   body: string,
-  fromUser: string
+  fromUser: string,
+  sender: string
 ) {
   const date = new Date(Date.now());
   return {
     id: uuidv4(),
     type: type,
     from: fromUser,
+    sender: sender,
     title: title,
     body: body,
     status: Statuses.UnRead,
@@ -147,6 +149,7 @@ export function GetUserMessages(userName: string): [] {
 export function GiveMessageToUser(
   toUserName: string,
   fromUserName: string,
+  sender: string,
   messageTitle: string,
   messageBody: string,
   messageType: number
@@ -155,7 +158,8 @@ export function GiveMessageToUser(
     messageType,
     messageTitle,
     messageBody,
-    fromUserName
+    fromUserName,
+    sender
   );
   addMessageToUser(toUserName, message);
 }
@@ -169,7 +173,8 @@ export function sendInviteToProject(
     2,
     `Invite from ${fromUser} to join "${project.getName()}".`,
     `${fromUser} would like you to join them in the project "${project.getName()}". Click the button below to add this project to your list of tracked projects.\nHave a great day!\n\nThe team at Bug-Trax `,
-    "SYSTEM"
+    "SYSTEM",
+    fromUser
   );
   message.projectId = project.getId();
   message.projectTitle = project.getName();

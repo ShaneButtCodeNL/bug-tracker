@@ -81,7 +81,7 @@ export default function AddProjects(props: any) {
               value="public"
               name="is-public"
               onClick={() => (isPublicRef.current = "public")}
-              checked
+              defaultChecked
             />{" "}
             Public
             <input

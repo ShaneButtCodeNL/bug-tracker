@@ -263,13 +263,14 @@ export async function SendInviteToUser(
 export async function GiveMessageToUser(
   toUser: string,
   fromUser: string,
+  sender: string,
   title: string,
   body: string,
   type: number
 ) {
   let res = await delay("GiveMessageToUser");
   console.debug(res);
-  GMTU(toUser, fromUser, title, body, type);
+  GMTU(toUser, fromUser, sender, title, body, type);
 }
 
 export async function ChangeStatusOfMessage(

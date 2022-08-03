@@ -1,6 +1,7 @@
 import "./styles/MessageDisplay.scss";
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CoupleProjectAndMember } from "../api/api";
 
 export default function MessageDisplay(props: any) {
   return (
@@ -27,7 +28,26 @@ export default function MessageDisplay(props: any) {
             {props.message.date}
           </div>
         </div>
-        <div className="message-display-body">{props.message.body}</div>
+        <div className="message-display-body">
+          {props.message.body}
+          <br />
+          {props.message.type === 2 ? (
+            <button
+              type="button"
+              className="invite-button"
+              onClick={() =>
+                CoupleProjectAndMember(
+                  props.message.projectId,
+                  props.user.getName()
+                )
+              }
+            >
+              Click {props.message.title.split(" ").slice(3).join(" ")}
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

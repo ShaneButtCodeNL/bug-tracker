@@ -12,7 +12,7 @@ export default function ComposeMessageDisplay(props: any) {
     let title: string = titleRef.current?.value || "No Title";
     let bodyMsg = messageBodyRef.current?.value || "No Message";
     if (toUser === "" || fromUser === "") return;
-    await GiveMessageToUser(toUser, fromUser, title, bodyMsg, 1);
+    await GiveMessageToUser(toUser, fromUser, fromUser, title, bodyMsg, 1);
   }
   return (
     <div className="compose-message-display-container">
