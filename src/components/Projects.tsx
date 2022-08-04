@@ -33,6 +33,7 @@ export default function Projects(props: any) {
         index={index}
         project={project}
         user={props.user}
+        setProjectList={setProjectList}
       />
     );
   }

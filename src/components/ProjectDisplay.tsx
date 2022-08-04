@@ -5,14 +5,16 @@ import AddIssueDialog from "./AddIssueDialog";
 import AddLanguageDialog from "./AddLanguageDialog";
 import IssueDisplay from "./IssueDisplay";
 import "./styles/ProjectDisplay.scss";
+import UnfollowConfirmDialog from "./UnfollowConfirmDialog";
 
 export default function ProjectDisplay(props: any) {
   const [issueList, setIssueList] = useState<any>(null);
   const [langList, setLangList] = useState<string[]>(
-    props.project.getLanguages() || []
+    props.project?.getLanguages() || []
   );
   const [showIssueDialog, setShowIssueDialog] = useState<Boolean>(false);
   const [showLangDialog, setShowLangDialog] = useState<Boolean>(false);
+  const [showUnfollowDialog, setShowUnfollowDialog] = useState<Boolean>(false);
   const inviteNameRef = useRef<HTMLInputElement>(null);
   const [inviteName, setInviteName] = useState("");
 
@@ -104,6 +106,17 @@ export default function ProjectDisplay(props: any) {
         >
           Send
         </button>
+        <button
+          type="button"
+          className="project-display-unfollow-button"
+          onClick={() => {
+            setShowIssueDialog(false);
+            setShowLangDialog(false);
+            setShowUnfollowDialog(true);
+          }}
+        >
+          Unfollow
+        </button>
       </div>
       <AddIssueDialog
         project={props.project}
@@ -123,6 +136,13 @@ export default function ProjectDisplay(props: any) {
           setShowIssueDialog(false);
         }}
         setLangList={setLangList}
+      />
+      <UnfollowConfirmDialog
+        project={props.project}
+        username={props.user.getName()}
+        showUnfollowDialog={showUnfollowDialog}
+        setShowUnfollowDialog={setShowUnfollowDialog}
+        setProjectList={props.setProjectList}
       />
     </div>
   );
