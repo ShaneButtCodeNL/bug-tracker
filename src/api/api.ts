@@ -9,6 +9,7 @@ import {
   ChangeStatusOfMessage as CSOM,
   DeleteMessage as DM,
   sendInviteToProject,
+  Statuses,
 } from "../data/UserMessageList";
 
 // delay value to simulate network speed min = (timevalue), max= (2 x timevalue)
@@ -357,4 +358,15 @@ export async function RemoveUserFromFollowedUsers(
   if (userA) {
     UserList.removeUserFromFriendList(usernameA, usernameB);
   }
+}
+
+export async function GetNumberOfUnreadMessages(username: string) {
+  let res = delay("GetNumberOfUnreadMessages");
+  console.debug(res);
+  let list: any[] = GUM(username);
+  let count = 0;
+  for (let message of list) {
+    count += message.status === Statuses.UnRead ? 1 : 0;
+  }
+  return count;
 }
