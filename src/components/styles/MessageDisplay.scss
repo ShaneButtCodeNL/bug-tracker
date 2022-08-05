@@ -33,12 +33,14 @@
 }
 .message-display-toolbar {
   padding: 0.5em 1em 0.5em 1em;
+  display: flex;
+  gap: 1em;
 }
 .message-display-toolbar-item {
   border-radius: 1em;
   border: outset 2px rgba($color: #000000, $alpha: 0.4);
   width: fit-content;
-  padding: 0.3em 1em 0.3em 0;
+  padding: 0.3em 1em 0.3em 1em;
   cursor: pointer;
   user-select: none;
 }

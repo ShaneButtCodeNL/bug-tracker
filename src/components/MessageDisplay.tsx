@@ -1,20 +1,96 @@
 import "./styles/MessageDisplay.scss";
-import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRotateLeft,
+  faUserPlus,
+  faUserMinus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CoupleProjectAndMember } from "../api/api";
+import {
+  AddToUserFollowedUsers,
+  CoupleProjectAndMember,
+  RemoveUserFromFollowedUsers,
+  UserFollowsUser,
+} from "../api/api";
+import { useEffect, useState } from "react";
 
 export default function MessageDisplay(props: any) {
+  const [followsSender, setFollowsSender] = useState<boolean | null>(null);
+  const [processing, setProcessing] = useState(true);
+  useEffect(() => {
+    async function fetchFollows() {
+      let f = await UserFollowsUser(props.user.getName(), props.message.sender);
+      setFollowsSender(f);
+      setProcessing(false);
+    }
+    fetchFollows();
+  }, []);
   return (
     <div className="message-display-container">
       <div className="message-display-toolbar">
-        <div
+        <button
+          type="button"
           className="message-display-toolbar-item"
           tabIndex={0}
           onClick={() => props.setDisplayState(0)}
         >
           <FontAwesomeIcon icon={faRotateLeft} />
           &nbsp;Inbox
-        </div>
+        </button>
+        {followsSender ? (
+          <button
+            type="button"
+            className="message-display-toolbar-item"
+            tabIndex={0}
+            disabled={processing}
+            onClick={() => {
+              setProcessing(true);
+              async function update() {
+                await RemoveUserFromFollowedUsers(
+                  props.user.getName(),
+                  props.message.sender
+                );
+                let f = await UserFollowsUser(
+                  props.user.getName(),
+                  props.message.sender
+                );
+                setFollowsSender(f);
+                setProcessing(false);
+              }
+              update();
+            }}
+          >
+            Unfollow &nbsp;
+            <FontAwesomeIcon icon={faUserMinus} /> &nbsp;
+            {props.message.sender}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="message-display-toolbar-item"
+            tabIndex={0}
+            disabled={processing}
+            onClick={() => {
+              setProcessing(true);
+              async function update() {
+                await AddToUserFollowedUsers(
+                  props.user.getName(),
+                  props.message.sender
+                );
+                let f = await UserFollowsUser(
+                  props.user.getName(),
+                  props.message.sender
+                );
+                setFollowsSender(f);
+                setProcessing(false);
+              }
+              update();
+            }}
+          >
+            Follow &nbsp;
+            <FontAwesomeIcon icon={faUserPlus} /> &nbsp;
+            {props.message.sender}
+          </button>
+        )}
       </div>
       <div className="message-display-content">
         <div className="message-display-detail-box">

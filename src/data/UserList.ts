@@ -27,6 +27,34 @@ export default class UserList {
   }
 
   /**
+   * Add a user to another users friendlist
+   * @param usernameA The username with friendlist
+   * @param usernameB The username to be added
+   */
+  static addUserToFriendList(usernameA: string, usernameB: string) {
+    let userList = this.getUserList();
+    let user = userList.find((x) => x.getName() === usernameA);
+    if (user) {
+      user.addFriendToList(usernameB);
+      localStorage.setItem(key, JSON.stringify({ userList: userList }));
+    }
+  }
+
+  /**
+   * Remove a user from a users friendlist
+   * @param usernameA The user having friend removed
+   * @param usernameB The user to be removed
+   */
+  static removeUserFromFriendList(usernameA: string, usernameB: string) {
+    let userList = this.getUserList();
+    let user = userList.find((x) => x.getName() === usernameA);
+    if (user) {
+      user.removeFriendFromList(usernameB);
+      localStorage.setItem(key, JSON.stringify({ userList: userList }));
+    }
+  }
+
+  /**
    * Gets the list of all users
    * @returns An array of User objects
    */

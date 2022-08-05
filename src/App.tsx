@@ -10,18 +10,25 @@ import UserNavBar from "./components/UserNavBar";
 import Welcome from "./components/Welcome";
 import User from "./data/User";
 
-function RenderSwitch(n: number, user: User, setActiveLink: Function) {
+function RenderSwitch(
+  n: number,
+  user: User,
+  setActiveLink: Function,
+  setUser: Function
+) {
   switch (n) {
     case 0:
-      return <Home user={user} />;
+      return <Home user={user} setUser={setUser} />;
     case 1:
-      return <Projects user={user} setActiveLink={setActiveLink} />;
+      return (
+        <Projects user={user} setActiveLink={setActiveLink} setUser={setUser} />
+      );
     case 2:
-      return <AddProjects user={user} />;
+      return <AddProjects user={user} setUser={setUser} />;
     case 3:
-      return <FindProjects user={user} />;
+      return <FindProjects user={user} setUser={setUser} />;
     case 4:
-      return <MessageBox user={user} />;
+      return <MessageBox user={user} setUser={setUser} />;
     default:
       return <div>SomeThing went wrong Your not suposed to see this.</div>;
   }
@@ -47,7 +54,7 @@ function App() {
       )}
       <div className="App-body">
         {user !== null ? (
-          RenderSwitch(activeLink, user, setActiveLink)
+          RenderSwitch(activeLink, user, setActiveLink, setUser)
         ) : (
           <Welcome />
         )}

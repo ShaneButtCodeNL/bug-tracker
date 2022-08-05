@@ -308,3 +308,53 @@ export async function DeleteListOfMessages(userName: string, msgIds: string[]) {
   let res = await delay("DeleteMessageList");
   console.debug(res);
 }
+
+/**
+ * Check if a User A follows a User B
+ * @param usernameA The user name of the user we are checking if follows usernameB
+ * @param usernameB The user name we check if usernameA follows
+ * @returns {Promise<boolean>} True if UserA follows UserB, else false
+ */
+export async function UserFollowsUser(
+  usernameA: string,
+  usernameB: string
+): Promise<boolean> {
+  let res = await delay("UserFollowUser");
+  console.debug(res);
+  let userA = UserList.getUser(usernameA);
+  if (userA) {
+    let friendList = userA.getFriendList();
+    let follows = friendList.findIndex((x) => x === usernameB);
+    return follows > -1;
+  }
+  return false;
+}
+
+export async function AddToUserFollowedUsers(
+  usernameA: string,
+  usernameB: string
+) {
+  let res = await delay("AddToUserFollowedUsers");
+  console.debug(res);
+  let userA = UserList.getUser(usernameA);
+  if (userA) {
+    UserList.addUserToFriendList(usernameA, usernameB);
+  }
+}
+
+/**
+ * Make userA stop following userB
+ * @param usernameA The user that is unfollowing userB
+ * @param usernameB The user being unfollowed by userA
+ */
+export async function RemoveUserFromFollowedUsers(
+  usernameA: string,
+  usernameB: string
+) {
+  let res = await delay("RemoveToUserFollowedUsers");
+  console.debug(res);
+  let userA = UserList.getUser(usernameA);
+  if (userA) {
+    UserList.removeUserFromFriendList(usernameA, usernameB);
+  }
+}
