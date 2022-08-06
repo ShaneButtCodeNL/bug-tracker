@@ -1,21 +1,28 @@
-@use "colors";
+@use "Varibles";
 
-.warm {
-  color: colors.$warm-color-font-main;
-  background-color: colors.$warm-color-bg-main;
-}
-.warm-accent {
-  color: colors.$warm-color-font-accent;
-  background-color: colors.$warm-color-bg-accent;
-}
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 
 .App-header {
   padding: 1em;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
 }
 
 .title-container {
+  position: relative;
   align-self: center;
+  font-family: "Anton", sans-serif;
+  color: Varibles.$main-title-color;
+  font-weight: 500;
+  &::before {
+    position: absolute;
+    content: "";
+    height: 0.3em;
+    bottom: -0.3em;
+    left: 0;
+    width: 100%;
+    background-color: Varibles.$main-title-color;
+  }
 }
 
 .App {

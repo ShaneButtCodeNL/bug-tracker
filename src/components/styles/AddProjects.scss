@@ -1,3 +1,5 @@
+@use "../../Varibles";
+
 .language-container {
   padding: 1em;
   border: inset 2px rgba(0, 0, 0, 0.2);
@@ -39,9 +41,7 @@
     grid-column-end: 3;
     width: fit-content;
     margin: auto;
-    padding: 0.2em 1em;
     border-radius: 0.5em;
-    border: solid 2px;
   }
   select {
     padding: 0.3em 1em;
@@ -49,5 +49,7 @@
     border: solid 1px;
     width: fit-content;
     margin: auto;
+    background-color: Varibles.$main-bg-color;
+    color: Varibles.$main-font-color;
   }
 }

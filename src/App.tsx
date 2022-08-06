@@ -45,7 +45,7 @@ function App() {
           setUser={setUser}
           setActiveLink={setActiveLink}
         />
-        <div className="title-container">Bug Trax</div>
+        <h1 className="title-container">Bug Trax</h1>
       </header>
       {user !== null ? (
         <UserNavBar activeLink={activeLink} setActiveLink={setActiveLink} />

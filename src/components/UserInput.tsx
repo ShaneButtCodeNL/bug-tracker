@@ -38,10 +38,10 @@ function UserInput(props: any) {
             <button type="button" onClick={() => login()}>
               Login
             </button>
+            <button type="button" onClick={() => resetLocalStorage()}>
+              RESET STORAGE
+            </button>
           </form>
-          <button type="button" onClick={() => resetLocalStorage()}>
-            RESET STORAGE
-          </button>
         </>
       ) : (
         <form className="loggedin-user-import-form">

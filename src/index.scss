@@ -1,13 +1,35 @@
+@use "Varibles";
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: Varibles.$main-bg-color;
+  color: Varibles.$main-font-color;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+button {
+  padding: 0.5em 1em;
+  border-radius: 1em;
+  color: Varibles.$main-font-color;
+  background-color: Varibles.$button-main-color;
+  border-color: Varibles.$button-main-border;
+}
+
+h1,
+h2,
+h3 {
+  color: Varibles.$accent-title-color;
+}
+input,
+textarea {
+  background-color: Varibles.$main-bg-color;
+  color: Varibles.$main-font-color;
 }

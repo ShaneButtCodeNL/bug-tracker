@@ -1,3 +1,5 @@
+@use "../../Varibles.scss";
+
 .project-display-container {
   position: relative;
   overflow: hidden;
@@ -11,7 +13,7 @@
   content: "";
   width: 100%;
   height: 100%;
-  background-color: lightslategray;
+  background-color: Varibles.$main-bg-color-selected;
   left: -100%;
   transition: left 500ms ease-out;
   z-index: -1;

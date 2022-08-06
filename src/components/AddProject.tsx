@@ -83,14 +83,14 @@ export default function AddProjects(props: any) {
               onClick={() => (isPublicRef.current = "public")}
               defaultChecked
             />{" "}
-            Public
+            Public &nbsp;
             <input
               type={"radio"}
               value="private"
               name="is-public"
               onClick={() => (isPublicRef.current = "private")}
-            />{" "}
-            Private
+            />
+            &nbsp; Private
           </div>
           <label>Languages:</label>
           <div className="language-container">
