@@ -1,6 +1,9 @@
+@use "../../Varibles.scss";
+
 .issue-container {
   display: grid;
   margin: 0.3em;
+  color: Varibles.$issue-font-color;
   border: 3px solid rgba($color: #000000, $alpha: 0.2);
   padding: 0.3em;
   row-gap: 1em;
@@ -13,10 +16,10 @@
     "state desc desc";
 }
 .Open {
-  background-color: orange;
+  background-color: Varibles.$issue-open-background;
 }
 .Closed {
-  background-color: greenyellow;
+  background-color: Varibles.$issue-closed-background;
 }
 .issue-title::before {
   position: absolute;
@@ -46,13 +49,9 @@
 
 .issue-state-button {
   grid-area: state-button;
-  border-radius: 0.5em;
   background-color: inherit;
-  border: rgba($color: #ffffff, $alpha: 0.6) outset 3px;
-  padding: 0.3em;
-}
-.open-issue-state-button {
-  border: rgba($color: #000000, $alpha: 0.6) outset 3px;
+  color: inherit;
+  border-color: Varibles.$issue-font-color;
 }
 
 .close-icon-bg {

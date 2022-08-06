@@ -1,6 +1,6 @@
 import { LanguageList } from "./Values";
 import "./styles/AddLanguageDialog.scss";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AddLanguageToProject, GetProject } from "../api/api";
 
 export default function AddLanguageDialog(props: any) {
@@ -20,9 +20,9 @@ export default function AddLanguageDialog(props: any) {
     }
   }
 
-  function updateList(e: any) {
-    AddLanguageToProject(props.project.getId(), selectedLang);
-    fetchList();
+  async function updateList(e: any) {
+    await AddLanguageToProject(props.project.getId(), selectedLang);
+    await fetchList();
     close(e);
   }
 

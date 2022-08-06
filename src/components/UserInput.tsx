@@ -19,9 +19,7 @@ function UserInput(props: any) {
     props.setUser(null);
     props.setActiveLink(0);
   };
-  function resetLocalStorage() {
-    localStorage.clear();
-  }
+
   return (
     <div className="user-input-container">
       {props.user === null ? (
@@ -37,9 +35,6 @@ function UserInput(props: any) {
             />
             <button type="button" onClick={() => login()}>
               Login
-            </button>
-            <button type="button" onClick={() => resetLocalStorage()}>
-              RESET STORAGE
             </button>
           </form>
         </>

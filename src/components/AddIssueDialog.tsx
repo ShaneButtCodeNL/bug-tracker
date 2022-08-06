@@ -48,29 +48,31 @@ export default function AddIssueDialog(props: any) {
           placeholder="Max 100 characters."
           tabIndex={props.show ? 0 : -1}
         ></textarea>
-        <button
-          type="button"
-          disabled={!props.show}
-          tabIndex={props.show ? 0 : -1}
-          onClick={(e) => {
-            AddIssueToProject(
-              props.project.getId(),
-              titleRef.current?.value || "",
-              descRef.current?.value || ""
-            );
-            UpdateList();
-            close(e);
-          }}
-        >
-          Open Issue
-        </button>
-        <button
-          type="button"
-          onClick={(e) => close(e)}
-          tabIndex={props.show ? 0 : -1}
-        >
-          Cancel
-        </button>
+        <div>
+          <button
+            type="button"
+            disabled={!props.show}
+            tabIndex={props.show ? 0 : -1}
+            onClick={(e) => {
+              AddIssueToProject(
+                props.project.getId(),
+                titleRef.current?.value || "",
+                descRef.current?.value || ""
+              );
+              UpdateList();
+              close(e);
+            }}
+          >
+            Open Issue
+          </button>
+          <button
+            type="button"
+            onClick={(e) => close(e)}
+            tabIndex={props.show ? 0 : -1}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

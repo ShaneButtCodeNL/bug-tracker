@@ -6,6 +6,7 @@
   padding: 1em;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  min-height: 8em;
 }
 
 .title-container {
@@ -22,6 +23,19 @@
     left: 0;
     width: 100%;
     background-color: Varibles.$main-title-color;
+  }
+}
+
+.header-debug {
+  border: solid 1px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  justify-self: end;
+  legend {
+    margin: 0 auto;
   }
 }
 

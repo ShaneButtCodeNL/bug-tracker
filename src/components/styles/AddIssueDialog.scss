@@ -1,10 +1,12 @@
+@use "../../Varibles.scss";
+
 .add-issue-dialog {
   display: grid;
   place-items: center;
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba($color: #000000, $alpha: 0.99);
+  background-color: rgba($color: Varibles.$main-bg-color-selected, $alpha: 0.9);
   top: 0;
   overflow: hidden;
   transition: left 500ms ease-out;
@@ -29,21 +31,24 @@
   place-content: center;
   row-gap: 0.5em;
   column-gap: 1em;
-  background-color: white;
+  background-color: Varibles.$main-bg-color;
   border: solid 2px rgba($color: #000000, $alpha: 1);
   border-radius: 1em;
   padding: 1em 2em;
   label {
     text-align: right;
+    height: fit-content;
+    margin: auto 0;
   }
   textarea {
     resize: none;
   }
-  button {
-    border: #000000 outset 3px;
-    border-radius: 0.5em;
-    min-width: 3em;
-    width: fit-content;
-    margin: auto;
+  div {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+    display: grid;
+    place-content: center;
+    grid-template-columns: auto auto;
+    gap: 1em;
   }
 }

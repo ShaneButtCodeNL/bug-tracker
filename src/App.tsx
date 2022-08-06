@@ -46,6 +46,19 @@ function App() {
           setActiveLink={setActiveLink}
         />
         <h1 className="title-container">Bug Trax</h1>
+        <fieldset className="header-debug">
+          <legend>Debug</legend>
+          <button
+            type="button"
+            onClick={() => {
+              setUser(null);
+              setActiveLink(0);
+              localStorage.clear();
+            }}
+          >
+            RESET STORAGE
+          </button>
+        </fieldset>
       </header>
       {user !== null ? (
         <UserNavBar activeLink={activeLink} setActiveLink={setActiveLink} />

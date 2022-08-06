@@ -1,8 +1,9 @@
 .user-input-container {
+  display: grid;
+  place-items: center;
   width: 30%;
   max-width: 17em;
   border: solid 1px;
-
   padding: 0.5em;
   border-radius: 1em;
 }
@@ -11,7 +12,6 @@
   grid-template-columns: auto auto;
   gap: 0.5em;
   place-items: center;
-  margin-bottom: 0.5em;
   input {
     border-radius: 0.5em;
     padding-left: 0.5em;
