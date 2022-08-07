@@ -10,14 +10,16 @@ export default function UnfollowConfirmDialog(props: any) {
     await DecoupleProjectAndMember(props.project.getId(), props.username);
     let res = await GetUserProjectList(props.username);
     let res2 = await fetchProjectsDetails(res);
-    props.setProjectList(res2);
+    console.log(res2);
+    props.setProjectList([...res2]);
+    props.setShowUnfollowDialog(false);
   }
   async function fetchProjectsDetails(pids: string[] | null) {
     if (pids) {
       let res = [];
       for (let id of pids) {
         let project = await GetProject(id);
-        res.push(project);
+        if (project) res.push(project);
       }
       return res;
     }

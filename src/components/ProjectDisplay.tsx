@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { GetProjectListOfIssues, SendInviteToUser } from "../api/api";
+import {
+  GetProjectListOfIssues,
+  GetProjectListOfLanguages,
+  SendInviteToUser,
+} from "../api/api";
 import Issue from "../data/Issue";
 import AddIssueDialog from "./AddIssueDialog";
 import AddLanguageDialog from "./AddLanguageDialog";
@@ -9,9 +13,7 @@ import UnfollowConfirmDialog from "./UnfollowConfirmDialog";
 
 export default function ProjectDisplay(props: any) {
   const [issueList, setIssueList] = useState<any>(null);
-  const [langList, setLangList] = useState<string[]>(
-    props.project?.getLanguages() || []
-  );
+  const [langList, setLangList] = useState<string[]>([]);
   const [showIssueDialog, setShowIssueDialog] = useState<Boolean>(false);
   const [showLangDialog, setShowLangDialog] = useState<Boolean>(false);
   const [showUnfollowDialog, setShowUnfollowDialog] = useState<Boolean>(false);
@@ -19,15 +21,18 @@ export default function ProjectDisplay(props: any) {
   const [inviteName, setInviteName] = useState("");
 
   async function fetchIssueList() {
+    console.log("fetch");
     let list = await GetProjectListOfIssues(props.project.getId());
     if (list) setIssueList(list);
+    let langs = await GetProjectListOfLanguages(props.project.getId());
+    setLangList(langs);
   }
 
   useEffect(() => {
     fetchIssueList();
-  }, []);
+  }, [props.project]);
   return (
-    <div className="project-display-container">
+    <div className={`project-display-container ${props.project.getId()}`}>
       <dl className="project-display-details">
         <dt>Project Name:</dt>
         <dd>{props.project.getName()}</dd>

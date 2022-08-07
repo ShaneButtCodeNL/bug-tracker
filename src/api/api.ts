@@ -90,6 +90,15 @@ export async function GetProjectListOfIssues(pid: string) {
   return val;
 }
 
+export async function GetProjectListOfLanguages(pid: string) {
+  let res = await delay("GetProjectListOfLanguages");
+
+  console.debug(res);
+  let val = ProjectList.getProject(pid);
+  let list = val?.getLanguages();
+  return list || [];
+}
+
 /**
  * Adds project to be tracked and adds user to the following list
  * @param project Project to be added

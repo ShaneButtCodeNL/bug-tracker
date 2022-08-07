@@ -52,7 +52,15 @@ export default function Projects(props: any) {
             </button>
           </form>
         );
-      return list.map((x, i) => makeProjectDisplay(x, i));
+      return list.map((x, i) => (
+        <ProjectDisplay
+          key={`project-display-${i}`}
+          index={i}
+          project={x}
+          user={props.user}
+          setProjectList={setProjectList}
+        />
+      ));
     }
     return <div>Searching</div>;
   }
